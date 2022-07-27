@@ -1,12 +1,7 @@
 const mongoose = require("mongoose");
-const url = "mongodb://127.0.0.1:27017/ehub";
-mongoose.connect(url, { useNewUrlParser: true });
 
-const db = mongoose.connection;
-db.once("open", (_) => {
-  console.log("Database connected:", url);
-});
-
-db.on("error", (err) => {
-  console.error("connection error:", err);
-});
+mongoose.connect(
+  "mongodb+srv://Parkhi:Parkhi123@cluster0.gmmfk.mongodb.net/E-Hubdata",
+  { useNewUrlParser: true },
+  () => console.log("Successfully connected to mongodb database")
+);

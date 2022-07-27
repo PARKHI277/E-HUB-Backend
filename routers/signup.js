@@ -2,6 +2,7 @@ const express = require("express");
 const router = new express.Router();
 const User = require("../schema_details/userdetails");
 const bcrypt = require("bcrypt");
+const mongoose = require("mongoose");
 
 router.post("/signup", async (req, res) => {
   try {
