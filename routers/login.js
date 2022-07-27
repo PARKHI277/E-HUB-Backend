@@ -3,6 +3,7 @@ const router = new express.Router();
 const User = require("../schema_details/userdetails");
 const bcrypt = require("bcrypt");
 
+// token validation left
 router.post("/login", async (req, res) => {
   const user = await User.findOne({ Email: req.body.Email });
   if (!user)
