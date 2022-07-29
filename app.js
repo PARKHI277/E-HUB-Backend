@@ -5,6 +5,9 @@ require("./connection/data");
 const SignupRouter = require("./routers/signup");
 const LoginRouter = require("./routers/login");
 
+const internshipRouter = require("./routers/internship");
+const magazineRouter = require("./routers/magazine");
+
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 
@@ -32,6 +35,9 @@ app.use(express.json());
 //routers
 app.use("/api/users", SignupRouter);
 app.use("/api/users", LoginRouter);
+
+app.use("/api/admin", internshipRouter);
+app.use("/api/admin", magazineRouter);
 
 const port = 3000;
 
