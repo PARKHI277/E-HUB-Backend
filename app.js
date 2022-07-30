@@ -5,7 +5,9 @@ require("./connection/data");
 const SignupRouter = require("./routers/signup");
 const LoginRouter = require("./routers/login");
 const BodyParser = require("body-parser");
-const domainrouter = require("./routers/Domain");
+const handbookrouter = require("./routers/handbook");
+const resourcerouter = require("./routers/resource");
+const mentorrouter = require("./routers/mentor");
 
 const internshipRouter = require("./routers/internship");
 const magazineRouter = require("./routers/magazine");
@@ -37,7 +39,9 @@ app.use(express.json());
 //routers
 app.use("/api/users", SignupRouter);
 app.use("/api/users", LoginRouter);
-app.use("/api/users", domainrouter);
+app.use("/api/users", handbookrouter);
+app.use("/api/users", resourcerouter);
+app.use("/api/users", mentorrouter);
 
 app.use("/api/admin", internshipRouter);
 app.use("/api/admin", magazineRouter);
