@@ -15,6 +15,7 @@ const industryrouter = require("./routers/industrypersonality");
 const internshipRouter = require("./routers/internship");
 const magazineRouter = require("./routers/magazine");
 const collegerouter = require("./routers/college");
+const teamrouter = require("./routers/team");
 const passport = require("passport");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
@@ -72,6 +73,7 @@ app.use("api/users", industryrouter);
 app.use("/api/admin", internshipRouter);
 app.use("/api/admin", magazineRouter);
 app.use("/api/admin", collegerouter);
+app.use("/api", teamrouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
