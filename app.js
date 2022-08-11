@@ -8,7 +8,7 @@ const BodyParser = require("body-parser");
 const handbookrouter = require("./routers/handbook");
 const resourcerouter = require("./routers/resource");
 const mentorrouter = require("./routers/mentor");
-
+const hiringrouter = require("./routers/hiring");
 const internshipRouter = require("./routers/internship");
 const magazineRouter = require("./routers/magazine");
 
@@ -42,7 +42,7 @@ app.use("/api/users", LoginRouter);
 app.use("/api/users", handbookrouter);
 app.use("/api/users", resourcerouter);
 app.use("/api/users", mentorrouter);
-
+app.use("/api/users", hiringrouter);
 app.use("/api/admin", internshipRouter);
 app.use("/api/admin", magazineRouter);
 
