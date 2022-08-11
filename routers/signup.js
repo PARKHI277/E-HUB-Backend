@@ -3,6 +3,7 @@ const router = new express.Router();
 const User = require("../schema_details/userdetails");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
+const passport = require("passport");
 
 router.post("/signup", async (req, res) => {
   try {
@@ -55,5 +56,21 @@ router.post("/signup", async (req, res) => {
     res.status(400).send(err);
   }
 });
+
+// Google - auth route
+// for sigin
+router.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile"] })
+);
+router.get(
+  "/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: "/login" }),
+  function (req, res) {
+    // Successful authentication, redirect home.
+
+    res.redirect("/");
+  }
+);
 
 module.exports = router;

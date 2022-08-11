@@ -8,7 +8,7 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
   FirstName: { type: String, required: true, minlength: 3 },
   LastName: { type: String, required: true, minlength: 3 },
-  Institution: { type: String, required: true },
+  Institution: { type: String },
   Email: { type: String, required: true, unique: true },
   ContactNum: {
     type: Number,
