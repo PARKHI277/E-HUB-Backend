@@ -46,8 +46,7 @@ app.use("/api/users", mentorrouter);
 app.use("/api/admin", internshipRouter);
 app.use("/api/admin", magazineRouter);
 
-const port = 3000;
-
-app.listen(port, () => {
-  console.log(`connection succesful  at port ${port}`);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`App is running on port ${PORT}`);
 });
