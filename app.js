@@ -75,8 +75,7 @@ app.use("/api/admin", magazineRouter);
 app.use("/api/admin", collegerouter);
 app.use("/api", teamrouter);
 
-const port = 3000;
-
-app.listen(port, () => {
-  console.log(`connection succesful  at port ${port}`);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`App is running on port ${PORT}`);
 });
