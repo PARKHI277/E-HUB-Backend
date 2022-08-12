@@ -29,11 +29,11 @@ const morgan = require("morgan");
 app.use(
   session({
     secret: "keyboard cat",
-    resave: false,
-    saveUnitialized: true,
-    store: new MongoDBStore({
-      mongooseConnection: mongoose.connection,
-    }),
+    resave: true,
+    saveUninitialized: true,
+    // store: new MongoDBStore({
+    //   url: process.env.MONGOLAB_URI,
+    // }),
     //cookie: { secure: true }
   })
 );
