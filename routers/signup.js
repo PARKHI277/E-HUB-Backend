@@ -57,6 +57,17 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+// get all users
+
+router.get("/allusers", async (req, res) => {
+  try {
+    const allusers = await User.find();
+
+    res.status(200).send(allusers);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
 // Google - auth route
 // for sigin
 router.get(
