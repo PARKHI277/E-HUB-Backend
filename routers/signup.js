@@ -4,44 +4,65 @@ const User = require("../schema_details/userdetails");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const passport = require("passport");
-
+const jwt = require("jsonwebtoken");
 router.post("/signup", async (req, res) => {
   try {
     const {
-      FirstName,
-      LastName,
-      Email,
-      Institution,
-      ContactNum,
-      Password,
-      ConfirmPassword,
+      userName,
+      branch,
+      email,
+      institutionName,
+      mobile,
+      password,
+      confirmPassword,
     } = await req.body;
-    const userExist = await User.findOne({ Email });
+    const userExist = await User.findOne({ email });
 
     if (userExist) {
       return res.status(200).send({ msg: "User already exists." });
     }
-    const password = req.body.Password;
+    const Password = req.body.password;
 
     const strongPasswords =
       /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
 
-    if (strongPasswords.test(password)) {
+    if (strongPasswords.test(Password)) {
       const salt = await bcrypt.genSalt(10);
-      const hashPassword = await bcrypt.hash(password, salt);
-      const hashconfirm = await bcrypt.hash(ConfirmPassword, salt);
+      const hashPassword = await bcrypt.hash(Password, salt);
+      const hashconfirm = await bcrypt.hash(confirmPassword, salt);
       const user_create = new User({
-        FirstName,
-        LastName,
-        Institution,
-        Email,
-        ContactNum,
-        Password: hashPassword,
-        ConfirmPassword: hashconfirm,
+        userName,
+        branch,
+        institutionName,
+        email,
+        mobile,
+        password: hashPassword,
+        confirmPassword: hashconfirm,
       });
       if (hashPassword == hashconfirm) {
-        const saveUser = await user_create.save();
-        res.status(201).send(saveUser);
+        // //creating acess token
+        // const accessToken = jwt.sign(
+        //   { user_create: user_create._id },
+        //   process.env.TOKEN_SECRET_KEY,
+        //   {
+        //     expiresIn: "1d",
+        //   }
+        // );
+
+        // // creating refresh token
+        // const refreshToken = jwt.sign(
+        //   { user_create: user_create._id },
+        //   process.env.REFRESH_TOKEN_SECRET,
+        //   {
+        //     expiresIn: "2d",
+        //   }
+        // );
+        res.status(200).send({
+          msg: "Registration succesfull",
+          user_create,
+          // accessToken: `${accessToken}`,
+          // refreshtoken: `${refreshToken}`,
+        });
       } else {
         res
           .status(400)
