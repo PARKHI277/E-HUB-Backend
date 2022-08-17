@@ -31,7 +31,12 @@ router.post("/signin", async (req, res) => {
     refreshTokens.push(refreshToken);
     res.status(200).send({
       msg: "Login Sucess",
-      user,
+      userName: user.userName,
+      email: user.email,
+      institutionName: user.institutionName,
+      branch: user.branch,
+      mobile: user.mobile,
+
       accessToken: accessToken,
       refreshToken: refreshToken,
     });

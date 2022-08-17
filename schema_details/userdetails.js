@@ -26,6 +26,9 @@ const UserSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  otpuser: {
+    type: Number,
+  },
 });
 
 UserSchema.methods.generateAcessToken = async function (req, res, next) {

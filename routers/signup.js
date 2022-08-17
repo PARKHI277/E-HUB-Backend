@@ -5,6 +5,9 @@ const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+dotenv.config();
+const nodemailer = require("nodemailer");
 router.post("/signup", async (req, res) => {
   try {
     const {
@@ -21,6 +24,8 @@ router.post("/signup", async (req, res) => {
     if (userExist) {
       return res.status(200).send({ msg: "User already exists." });
     }
+    const otp = Math.floor(Math.floor(100000 + Math.random() * 900000));
+
     const Password = req.body.password;
 
     const strongPasswords =
@@ -38,31 +43,44 @@ router.post("/signup", async (req, res) => {
         mobile,
         password: hashPassword,
         confirmPassword: hashconfirm,
+        otpuser: otp,
       });
+      console.log(otp);
       if (hashPassword == hashconfirm) {
-        // //creating acess token
-        // const accessToken = jwt.sign(
-        //   { user_create: user_create._id },
-        //   process.env.TOKEN_SECRET_KEY,
-        //   {
-        //     expiresIn: "1d",
-        //   }
-        // );
+        //creating acess token
+        const accessToken = jwt.sign(
+          { user_create: user_create._id },
+          process.env.TOKEN_SECRET_KEY,
+          {
+            expiresIn: "1d",
+          }
+        );
 
-        // // creating refresh token
-        // const refreshToken = jwt.sign(
-        //   { user_create: user_create._id },
-        //   process.env.REFRESH_TOKEN_SECRET,
-        //   {
-        //     expiresIn: "2d",
-        //   }
-        // );
-        res.status(200).send({
-          msg: "Registration succesfull",
-          user_create,
-          // accessToken: `${accessToken}`,
-          // refreshtoken: `${refreshToken}`,
-        });
+        // creating refresh token
+        const refreshToken = jwt.sign(
+          { user_create: user_create._id },
+          process.env.REFRESH_TOKEN_SECRET,
+          {
+            expiresIn: "2d",
+          }
+        );
+        user_create
+          .save()
+          .then(() => {
+            res.status(201).send({
+              msg: "Registration sucessfull",
+              userName,
+              email,
+              institutionName,
+              branch,
+              mobile,
+              accessToken: `${accessToken}`,
+              refreshtoken: `${refreshToken}`,
+            });
+          })
+          .catch((err) => {
+            res.status(400).send(err);
+          });
       } else {
         res
           .status(400)
@@ -75,6 +93,42 @@ router.post("/signup", async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(400).send(err);
+  }
+});
+
+// otp generation during signup
+router.post("/otp-send", async (req, res, next) => {
+  const userexixt = await User.findOne({ email: req.body.email });
+
+  if (userexixt) {
+    try {
+      console.log(userexixt.otpuser);
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.Email,
+          pass: process.env.Password,
+        },
+      });
+      const mailOptions = {
+        from: "testapi277@gmail.com",
+        to: userexixt.email,
+        subject: "Your otp for verification",
+        text: userexixt.otpuser,
+      };
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Otp sent to your entered email");
+        }
+      });
+      res.status(201).send("otp has been sent to your email");
+    } catch (err) {
+      res.status(400).send("Something went wrong");
+    }
+  } else {
+    res.send("Please enter valid email id");
   }
 });
 
@@ -106,3 +160,11 @@ router.get(
 );
 
 module.exports = router;
+//  msg: "Registration sucessfull",
+//             userName,
+//             email,
+//             institutionName,
+//             branch,
+//             mobile,
+//             accessToken: `${accessToken}`,
+//             refreshtoken: `${refreshToken}`,
