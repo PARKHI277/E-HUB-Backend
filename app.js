@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 require("./connection/data");
-
+const cookieparser = require("cookie-parser");
 const SignupRouter = require("./routers/signup");
 const LoginRouter = require("./routers/login");
 const BodyParser = require("body-parser");
@@ -23,6 +23,7 @@ const MongoDBStore = require("connect-mongodb-session")(session);
 const app = express();
 require("./config/passport")(passport);
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieparser());
 const morgan = require("morgan");
 
 // SESSION MIDDLEWARE
@@ -63,13 +64,13 @@ app.get("/", (req, res) => {
 app.use(express.json());
 
 //routers
-app.use("/api/users", SignupRouter);
-app.use("/api/users", LoginRouter);
+app.use("/api/v1", SignupRouter);
+app.use("/api/v1", LoginRouter);
 app.use("/api/users", handbookrouter);
 app.use("/api/users", resourcerouter);
 app.use("/api/users", mentorrouter);
 app.use("/api/users", hiringrouter);
-app.use("api/users", industryrouter);
+app.use("/api/users", industryrouter);
 app.use("/api/admin", internshipRouter);
 app.use("/api/admin", magazineRouter);
 app.use("/api/admin", collegerouter);
