@@ -63,8 +63,11 @@ router.post("/refresh", (req, res, next) => {
 
 // Middleware to authenticate user by verifying his/her jwt-token.
 async function auth(req, res, next) {
-  let token = req.headers["authorization"];
-  token = token.split(" ")[1]; //Access token
+  // let token = req.headers["authorization"];
+  let token = req.body.accessToken;
+
+  // token = token.split(" ")[1]; //Access token
+  console.log(token);
 
   jwt.verify(token, process.env.TOKEN_SECRET_KEY, async (err, user) => {
     if (user) {
