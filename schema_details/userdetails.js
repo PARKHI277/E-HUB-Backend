@@ -7,21 +7,38 @@ const jwt = require("jsonwebtoken");
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-  // FirstName: { type: String, required: true, minlength: 3 },
-  userName: { type: String, required: true, minlength: 3 },
-  // LastName: { type: String, required: true, minlength: 3 },
-  institutionName: { type: String },
-  branch: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  mobile: {
+  userName: {
     type: String,
-    required: true,
-    maxlength: 10,
-    minlength: 10,
+    required: [true, "username minimum lenght should be 3"],
+    minlength: 3,
+  },
+  institutionName: {
+    type: String,
+  },
+  branch: {
+    type: String,
+    required: [true, "Branch field is required"],
+  },
+  email: {
+    type: String,
+    required: [true, "Email is required"],
     unique: true,
   },
-  password: { type: String, required: true },
-  confirmPassword: { type: String, required: true },
+  mobile: {
+    type: String,
+    required: [true, "mobile number is required"],
+    maxlength: [10, "mobile number should have length of 10 only"],
+    minlength: [10, "mobile number should have length of 10 only"],
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: [true, "password is required"],
+  },
+  confirmPassword: {
+    type: String,
+    required: [true, "confirm password is required"],
+  },
   isVerified: {
     type: Boolean,
     default: false,

@@ -9,6 +9,13 @@ const dotenv = require("dotenv");
 dotenv.config();
 const nodemailer = require("nodemailer");
 const atob = require("atob");
+const {
+  handleValidationError,
+  handleDuplicateField,
+  handleCastError,
+} = require("../controller/usercontroller");
+
+// user signup
 router.post("/signup", async (req, res) => {
   try {
     const {
@@ -92,18 +99,18 @@ router.post("/signup", async (req, res) => {
       res.status(400).send({ msg: "Please enter strong password" });
     }
   } catch (err) {
-    console.log(err);
-    res.status(400).send(err);
+    if (err.code === 11000) message = handleDuplicateField(err);
+    if (err.name === "ValidationError") message = handleValidationError(err);
+    if (err.name === "CastError") message = handleCastError(err);
+    return res.status(400).json({
+      success: false,
+      message: message,
+    });
   }
 });
 
 // otp generation during signup
 router.post("/otp-send", async (req, res, next) => {
-  // const token = req.body.accessToken;
-  // const dec = token.split(".")[1];
-  // const decode = JSON.parse(atob(dec)); //contains Userid
-  // console.log(dec);
-
   const userexixt = await User.findOne({ email: req.body.email });
 
   if (userexixt) {
@@ -134,7 +141,7 @@ router.post("/otp-send", async (req, res, next) => {
       res.status(400).send("Something went wrong");
     }
   } else {
-    res.send("Please enter valid email id");
+    res.status(400).send("Please enter valid email id");
   }
 });
 
@@ -166,11 +173,3 @@ router.get(
 );
 
 module.exports = router;
-//  msg: "Registration sucessfull",
-//             userName,
-//             email,
-//             institutionName,
-//             branch,
-//             mobile,
-//             accessToken: `${accessToken}`,
-//             refreshtoken: `${refreshToken}`,
