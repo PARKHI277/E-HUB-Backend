@@ -45,7 +45,7 @@ router.post("/signin", async (req, res) => {
 
 // Creates a new accessToken using the given refreshToken;
 router.post("/refresh", (req, res, next) => {
-  const refreshToken = req.body.token;
+  const refreshToken = req.body.refreshToken;
   if (!refreshToken || !refreshTokens.includes(refreshToken)) {
     return res.json({ message: "Refresh token not found, login again" });
   }

@@ -8,6 +8,7 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
 const nodemailer = require("nodemailer");
+const atob = require("atob");
 router.post("/signup", async (req, res) => {
   try {
     const {
@@ -98,6 +99,11 @@ router.post("/signup", async (req, res) => {
 
 // otp generation during signup
 router.post("/otp-send", async (req, res, next) => {
+  // const token = req.body.accessToken;
+  // const dec = token.split(".")[1];
+  // const decode = JSON.parse(atob(dec)); //contains Userid
+  // console.log(dec);
+
   const userexixt = await User.findOne({ email: req.body.email });
 
   if (userexixt) {
@@ -123,7 +129,7 @@ router.post("/otp-send", async (req, res, next) => {
           console.log("Otp sent to your entered email");
         }
       });
-      res.status(201).send("otp has been sent to your email");
+      res.status(200).send("otp has been sent to your email");
     } catch (err) {
       res.status(400).send("Something went wrong");
     }

@@ -14,7 +14,7 @@ const UserSchema = new Schema({
   branch: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   mobile: {
-    type: Number,
+    type: String,
     required: true,
     maxlength: 10,
     minlength: 10,
@@ -49,22 +49,6 @@ UserSchema.methods.generateAcessToken = async function (req, res, next) {
     return res.status(400).send(err);
   }
 };
-// UserSchema.methods.generaterefreshToken = async function () {
-//   try {
-//     const pay_load = { _id: this._id };
-//     const options = {
-//       expiresIn: "1y",
-//     };
-//     const refreshtoken = jwt.sign(
-//       pay_load,
-//       options,
-//       process.env.TOKEN_SECRET_KEYS
-//     );
-//     return refreshtoken;
-//   } catch (err) {
-//     return res.status(400).send(err);
-//   }
-// };
 
 const User = new mongoose.model("User", UserSchema);
 module.exports = User;
