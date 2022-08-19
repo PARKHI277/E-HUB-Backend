@@ -83,7 +83,7 @@ router.post("/signup", async (req, res) => {
               branch,
               mobile,
               accessToken: `${accessToken}`,
-              refreshtoken: `${refreshToken}`,
+              refreshToken: `${refreshToken}`,
             });
           })
           .catch((err) => {
