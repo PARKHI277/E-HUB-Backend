@@ -66,15 +66,15 @@ app.use(express.json());
 //routers
 app.use("/api/v1", SignupRouter);
 app.use("/api/v1", LoginRouter);
-app.use("/api/users", handbookrouter);
-app.use("/api/users", resourcerouter);
-app.use("/api/users", mentorrouter);
-app.use("/api/users", hiringrouter);
-app.use("/api/users", industryrouter);
-app.use("/api/admin", internshipRouter);
-app.use("/api/admin", magazineRouter);
-app.use("/api/admin", collegerouter);
-app.use("/api", teamrouter);
+app.use("/api/v1", handbookrouter);
+app.use("/api/v1", resourcerouter);
+app.use("/api/v1", mentorrouter);
+app.use("/api/v1", hiringrouter);
+app.use("/api/v1", industryrouter);
+app.use("/api/v1", internshipRouter);
+app.use("/api/v1", magazineRouter);
+app.use("/api/v1", collegerouter);
+app.use("/api/v1", teamrouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

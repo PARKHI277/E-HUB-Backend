@@ -5,15 +5,15 @@ const College = require("../schema_details/colleges");
 // admin side
 router.post("/college", async (req, res) => {
   try {
-    const { collegename } = await req.body;
-    const collegeExist = await College.findOne({ collegename });
+    const { collegeName } = await req.body;
+    const collegeExist = await College.findOne({ collegeName });
 
     if (collegeExist) {
       return res.status(200).send({ msg: "college already exists." });
     }
 
     const college_create = new College({
-      collegename,
+      collegeName,
     });
 
     const savecollege = await college_create.save();
