@@ -44,7 +44,7 @@ const UserSchema = new Schema({
     default: false,
   },
   otpuser: {
-    type: Number,
+    type: String,
   },
 });
 

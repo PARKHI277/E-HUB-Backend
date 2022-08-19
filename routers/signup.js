@@ -133,6 +133,7 @@ router.post("/otp-send", async (req, res, next) => {
       transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
           console.log(error);
+          res.status(400).send("Some error occur");
         } else {
           console.log("Otp sent to your entered email");
         }
