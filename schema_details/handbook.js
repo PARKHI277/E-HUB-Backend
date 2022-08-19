@@ -5,11 +5,11 @@ const validate = require("validator");
 const Schema = mongoose.Schema;
 
 const handbookSchema = new Schema({
-  Title: {
+  title: {
     type: String,
     required: true,
   },
-  Content: {
+  content: {
     type: String,
     required: true,
   },

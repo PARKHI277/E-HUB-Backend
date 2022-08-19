@@ -3,14 +3,14 @@ const router = new express.Router();
 const Team = require("../schema_details/team");
 
 // admin
-router.post("/admin/team", async (req, res, next) => {
+router.post("/team", async (req, res, next) => {
   try {
-    const { Name, Position, Description, Contactno } = await req.body;
+    const { name, position, description, mobile } = await req.body;
     const team_create = new Team({
-      Name,
-      Position,
-      Description,
-      Contactno,
+      name,
+      position,
+      description,
+      mobile,
     });
     const saveteam = await team_create.save();
     res.status(201).send(saveteam);
@@ -22,7 +22,7 @@ router.post("/admin/team", async (req, res, next) => {
 
 // user side to get
 
-router.get("/user/team", async (req, res) => {
+router.get("/team", async (req, res) => {
   try {
     const allteams = await Team.find();
 

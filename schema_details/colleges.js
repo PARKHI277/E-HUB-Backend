@@ -5,7 +5,7 @@ const validate = require("validator");
 const Schema = mongoose.Schema;
 
 const collegeschema = new Schema({
-  collegename: {
+  collegeName: {
     type: String,
     required: true,
   },

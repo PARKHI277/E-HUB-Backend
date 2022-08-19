@@ -5,19 +5,20 @@ const validate = require("validator");
 const Schema = mongoose.Schema;
 
 const MentorSchema = new Schema({
-  MentorName: {
+  mentorName: {
     type: String,
     required: true,
     minLength: 6,
   },
-  MentorDomain: {
+  mentorDomain: {
     type: String,
     required: true,
   },
-  MentorNumber: {
-    type: Number,
+  mentorNumber: {
+    type: String,
     required: true,
     maxLength: 10,
+    minLength: 10,
   },
 });
 

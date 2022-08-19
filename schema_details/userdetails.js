@@ -48,24 +48,24 @@ const UserSchema = new Schema({
   },
 });
 
-UserSchema.methods.generateAcessToken = async function (req, res, next) {
-  try {
-    const pay_load = { _id: this._id };
-    const options = {
-      expiresIn: "2d",
-    };
-    const acesstoken = jwt.sign(
-      pay_load,
-      options,
+// UserSchema.methods.generateAcessToken = async function (req, res, next) {
+//   try {
+//     const pay_load = { _id: this._id };
+//     const options = {
+//       expiresIn: "2d",
+//     };
+//     const acesstoken = jwt.sign(
+//       pay_load,
+//       options,
 
-      process.env.TOKEN_SECRET_KEY
-    );
-    return acesstoken;
-  } catch (err) {
-    console.log(err);
-    return res.status(400).send(err);
-  }
-};
+//       process.env.TOKEN_SECRET_KEY
+//     );
+//     return acesstoken;
+//   } catch (err) {
+//     console.log(err);
+//     return res.status(400).send(err);
+//   }
+// };
 
 const User = new mongoose.model("User", UserSchema);
 module.exports = User;

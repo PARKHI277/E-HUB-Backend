@@ -95,17 +95,18 @@ router.post("/signup", async (req, res) => {
           .send({ msg: "Password and confirmPasword are not matching" });
       }
     } else {
-      console.log("p");
       res.status(400).send({ msg: "Please enter strong password" });
     }
   } catch (err) {
-    if (err.code === 11000) message = handleDuplicateField(err);
-    if (err.name === "ValidationError") message = handleValidationError(err);
-    if (err.name === "CastError") message = handleCastError(err);
-    return res.status(400).json({
-      success: false,
-      message: message,
-    });
+    // if (err.code === 11000) message = handleDuplicateField(err);
+    // if (err.name === "ValidationError") message = handleValidationError(err);
+    // if (err.name === "CastError") message = handleCastError(err);
+    // return res.status(400).json({
+    //   success: false,
+    //   message: message,
+    // });
+    console.log(err.message);
+    return res.status(400).send({ msg: "Something went wrong" });
   }
 });
 
@@ -119,8 +120,8 @@ router.post("/otp-send", async (req, res, next) => {
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-          user: process.env.Email,
-          pass: process.env.Password,
+          user: "testapi277@gmail.com",
+          pass: process.env.pass,
         },
       });
       const mailOptions = {
@@ -136,12 +137,12 @@ router.post("/otp-send", async (req, res, next) => {
           console.log("Otp sent to your entered email");
         }
       });
-      res.status(200).send("otp has been sent to your email");
+      res.status(201).send("otp has been sent to your email");
     } catch (err) {
       res.status(400).send("Something went wrong");
     }
   } else {
-    res.status(400).send("Please enter valid email id");
+    res.send("Please enter valid email id");
   }
 });
 
