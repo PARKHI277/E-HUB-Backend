@@ -42,7 +42,7 @@ router.post("/signup", async (req, res) => {
     const userExist = await User.findOne({ email });
 
     if (userExist) {
-      return res.status(200).send({ msg: "User already exists." });
+      return res.status(200).send({ message: "User already exists." });
     }
     const otp = Math.floor(Math.floor(100000 + Math.random() * 900000));
 
@@ -97,7 +97,7 @@ router.post("/signup", async (req, res) => {
           .save()
           .then(() => {
             res.status(201).send({
-              msg: "Registration successfull",
+              message: "Registration successfull",
               userName,
               email,
               institutionName,
@@ -122,15 +122,16 @@ router.post("/signup", async (req, res) => {
       } else {
         res
           .status(400)
-          .send({ msg: "Password and confirmPassword are not matching" });
+          .send({ message: "Password and confirmPassword are not matching" });
       }
     } else {
       res.status(400).send({
-        msg: "Password should be longer than 8 characters and it has to include at least one number,one uppercase letter , one special charcter and one lowercase , Password should start from uppercase Letter",
+        mesaage:
+          "Password should be longer than 8 characters and it has to include at least one number,one uppercase letter , one special charcter and one lowercase , Password should start from uppercase Letter",
       });
     }
   } catch (err) {
-    return res.status(400).send({ msg: "Something went wrong" });
+    return res.status(400).send({ message: "Something went wrong" });
   }
 });
 

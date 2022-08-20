@@ -14,13 +14,13 @@ const { sign, verify } = require("jsonwebtoken");
 router.post("/signin", async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
   if (!user)
-    return res.status(400).send({ msg: "This email is not registred" });
+    return res.status(400).send({ message: "This email is not registred" });
 
   // password is correct or not
   const validpass = await bcrypt.compare(req.body.password, user.password);
 
   if (!validpass) {
-    return res.status(400).send({ msg: "wrong password" });
+    return res.status(400).send({ message: "wrong password" });
   } else {
     let accessToken = jwt.sign({ user }, process.env.TOKEN_SECRET_KEY, {
       expiresIn: "1d",
@@ -30,7 +30,7 @@ router.post("/signin", async (req, res) => {
     });
     refreshTokens.push(refreshToken);
     res.status(200).send({
-      msg: "Login Sucess",
+      message: "Login Sucess",
       userName: user.userName,
       email: user.email,
       institutionName: user.institutionName,
