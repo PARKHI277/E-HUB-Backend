@@ -117,7 +117,11 @@ return res.status(400).json({
           .send({ msg: "Password and confirmPassword are not matching" });
       }
     } else {
-      res.status(400).send({ msg: "Please enter strong password" });
+      res
+        .status(400)
+        .send({
+          msg: "Password should be longer than 8 characters and it has to include at least one number,one uppercase letter , one special charcter and one lowercase , Password should start from uppercase Letter",
+        });
     }
   } catch (err) {
    
