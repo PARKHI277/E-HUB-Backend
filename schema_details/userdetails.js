@@ -9,7 +9,7 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
   userName: {
     type: String,
-    required: [true, "username minimum lenght should be 3"],
+    required: [true, "username minimum length should be 3"],
     minlength: 3,
   },
   institutionName: {
@@ -17,7 +17,7 @@ const UserSchema = new Schema({
   },
   branch: {
     type: String,
-    required: [true, "Branch field is required"],
+    required: [true, 'Branch field is required'],
   },
   email: {
     type: String,
@@ -26,18 +26,18 @@ const UserSchema = new Schema({
   },
   mobile: {
     type: String,
-    required: [true, "mobile number is required"],
-    maxlength: [10, "mobile number should have length of 10 only"],
-    minlength: [10, "mobile number should have length of 10 only"],
+    required: [true, 'mobile number is required'],
+    maxlength: [10, 'mobile number should have length of 10 only'],
+    minlength: [10, 'mobile number should have length of 10 only'],
     unique: true,
   },
   password: {
     type: String,
-    required: [true, "password is required"],
+    required: [true, 'password is required'],
   },
   confirmPassword: {
     type: String,
-    required: [true, "confirm password is required"],
+    required: [true, 'Confirm password is required'],
   },
   isVerified: {
     type: Boolean,
