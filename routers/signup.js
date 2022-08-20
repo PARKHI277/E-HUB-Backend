@@ -27,6 +27,11 @@ router.post("/signup", async (req, res) => {
       password,
       confirmPassword,
     } = await req.body;
+    if(!userName && !branch && !email && !mobile && !password && !confirmPassword)
+     return res.status(400).json({
+      success: false,
+      message: "Please fill all the fields",
+    });
     const userExist = await User.findOne({ email });
 
     if (userExist) {
@@ -38,7 +43,16 @@ router.post("/signup", async (req, res) => {
 
     const strongPasswords =
       /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
-
+if(!confirmPassword && Password)
+return res.status(400).json({
+  success: false,
+  message: "Confirm the password",
+});
+else if((!confirmPassword && !Password)|| (confirmPassword && !Password))
+return res.status(400).json({
+  success: false,
+  message: "Enter password",
+});
     if (strongPasswords.test(Password)) {
       const salt = await bcrypt.genSalt(10);
       const hashPassword = await bcrypt.hash(Password, salt);
@@ -76,7 +90,7 @@ router.post("/signup", async (req, res) => {
           .save()
           .then(() => {
             res.status(201).send({
-              msg: "Registration sucessfull",
+              msg: "Registration successfull",
               userName,
               email,
               institutionName,
@@ -86,26 +100,27 @@ router.post("/signup", async (req, res) => {
               refreshToken: `${refreshToken}`,
             });
           })
-          .catch((err) => {
-            res.status(400).send(err);
+           .catch((err) => { if (err.code === 11000) message = err.message;
+            if (err.name === "ValidationError") message =  err.message;
+            if (err.name === "CastError") message =  err.message;
+            if (err.name === "EmptyError") message =  err.message;
+            return res.status(400).json({
+              success: false,
+              message: message,
+            });
+           // console.log(err.message);
+          //  res.status(400).send(err.message);
           });
       } else {
         res
           .status(400)
-          .send({ msg: "Password and confirmPasword are not matching" });
+          .send({ msg: "Password and confirmPassword are not matching" });
       }
     } else {
       res.status(400).send({ msg: "Please enter strong password" });
     }
   } catch (err) {
-    // if (err.code === 11000) message = handleDuplicateField(err);
-    // if (err.name === "ValidationError") message = handleValidationError(err);
-    // if (err.name === "CastError") message = handleCastError(err);
-    // return res.status(400).json({
-    //   success: false,
-    //   message: message,
-    // });
-    console.log(err.message);
+   
     return res.status(400).send({ msg: "Something went wrong" });
   }
 });
