@@ -27,10 +27,16 @@ router.post("/college", async (req, res) => {
 // user side
 router.get("/college", async (req, res) => {
   try {
-    const allcollege = await College.find();
+    const allcolleges = await College.find();
+    // var coll_arr = [];
+    collegearray = allcolleges.map((allcollege) => allcollege.collegeName);
 
-    res.status(200).send(allcollege);
+    // allcolleges.forEach((elem) => {
+    //   coll_arr.push(elem);
+    // });
+    res.status(200).send({ collegeName: collegearray });
   } catch (err) {
+    console.log(err);
     res.status(500).send(err);
   }
 });

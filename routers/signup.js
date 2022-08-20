@@ -27,11 +27,18 @@ router.post("/signup", async (req, res) => {
       password,
       confirmPassword,
     } = await req.body;
-    if(!userName && !branch && !email && !mobile && !password && !confirmPassword)
-     return res.status(400).json({
-      success: false,
-      message: "Please fill all the fields",
-    });
+    if (
+      !userName &&
+      !branch &&
+      !email &&
+      !mobile &&
+      !password &&
+      !confirmPassword
+    )
+      return res.status(400).json({
+        success: false,
+        message: "Please fill all the fields",
+      });
     const userExist = await User.findOne({ email });
 
     if (userExist) {
@@ -43,16 +50,16 @@ router.post("/signup", async (req, res) => {
 
     const strongPasswords =
       /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
-if(!confirmPassword && Password)
-return res.status(400).json({
-  success: false,
-  message: "Confirm the password",
-});
-else if((!confirmPassword && !Password)|| (confirmPassword && !Password))
-return res.status(400).json({
-  success: false,
-  message: "Enter password",
-});
+    if (!confirmPassword && Password)
+      return res.status(400).json({
+        success: false,
+        message: "Confirm the password",
+      });
+    else if ((!confirmPassword && !Password) || (confirmPassword && !Password))
+      return res.status(400).json({
+        success: false,
+        message: "Enter password",
+      });
     if (strongPasswords.test(Password)) {
       const salt = await bcrypt.genSalt(10);
       const hashPassword = await bcrypt.hash(Password, salt);
@@ -100,16 +107,17 @@ return res.status(400).json({
               refreshToken: `${refreshToken}`,
             });
           })
-           .catch((err) => { if (err.code === 11000) message = err.message;
-            if (err.name === "ValidationError") message =  err.message;
-            if (err.name === "CastError") message =  err.message;
-            if (err.name === "EmptyError") message =  err.message;
+          .catch((err) => {
+            if (err.code === 11000) message = err.message;
+            if (err.name === "ValidationError") message = err.message;
+            if (err.name === "CastError") message = err.message;
+            if (err.name === "EmptyError") message = err.message;
             return res.status(400).json({
               success: false,
               message: message,
             });
-           // console.log(err.message);
-          //  res.status(400).send(err.message);
+            // console.log(err.message);
+            //  res.status(400).send(err.message);
           });
       } else {
         res
@@ -117,14 +125,11 @@ return res.status(400).json({
           .send({ msg: "Password and confirmPassword are not matching" });
       }
     } else {
-      res
-        .status(400)
-        .send({
-          msg: "Password should be longer than 8 characters and it has to include at least one number,one uppercase letter , one special charcter and one lowercase , Password should start from uppercase Letter",
-        });
+      res.status(400).send({
+        msg: "Password should be longer than 8 characters and it has to include at least one number,one uppercase letter , one special charcter and one lowercase , Password should start from uppercase Letter",
+      });
     }
   } catch (err) {
-   
     return res.status(400).send({ msg: "Something went wrong" });
   }
 });
