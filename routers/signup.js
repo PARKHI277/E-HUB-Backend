@@ -108,7 +108,11 @@ router.post("/signup", async (req, res) => {
             });
           })
           .catch((err) => {
-            if (err.code === 11000) message = err.message;
+            if (err.code === 11000) {
+              // message = err.message;
+              message = "This mobile is already exixt";
+              console.log(message);
+            }
             if (err.name === "ValidationError") message = err.message;
             if (err.name === "CastError") message = err.message;
             if (err.name === "EmptyError") message = err.message;

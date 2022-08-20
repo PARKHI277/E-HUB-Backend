@@ -16,6 +16,7 @@ const internshipRouter = require("./routers/internship");
 const magazineRouter = require("./routers/magazine");
 const collegerouter = require("./routers/college");
 const teamrouter = require("./routers/team");
+const branchrouter = require("./routers/Branch");
 const passport = require("passport");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
@@ -75,7 +76,7 @@ app.use("/api/v1", internshipRouter);
 app.use("/api/v1", magazineRouter);
 app.use("/api/v1", collegerouter);
 app.use("/api/v1", teamrouter);
-
+app.use("/api/v1", branchrouter);
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`App is running on port ${PORT}`);
