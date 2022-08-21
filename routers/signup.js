@@ -13,7 +13,7 @@ const {
   handleDuplicateField,
   handleCastError,
 } = require("../controller/usercontroller");
-const emailer=require("../services/email");
+const emailer = require("../services/email");
 
 // user signup
 router.post("/signup", async (req, res) => {
@@ -128,7 +128,7 @@ router.post("/signup", async (req, res) => {
       } else {
         res
           .status(400)
-          .send({ message: "Password and confirmPassword are not matching" });
+          .send({ message: "Password and confirmPassword do not match" });
       }
     } else {
       res.status(400).send({
@@ -140,6 +140,59 @@ router.post("/signup", async (req, res) => {
     return res.status(400).send({ message: "Something went wrong" });
   }
 });
+
+//taking otp and updating isVerified in db
+
+router.patch("/signup/verify", async (req, res) => {
+  try {
+    const accessToken = req.body.accessToken;
+    const otp = req.body.otp;
+    if (!accessToken && !otp)
+      return res.status(400).json({
+        success: false,
+        message: "Send access token and OTP",
+      });
+    if (!accessToken)
+      return res.status(400).json({
+        success: false,
+        message: "Send access token",
+      });
+    if (!otp)
+      return res.status(400).json({
+        success: false,
+        message: "Send OTP",
+      });
+    const dec = accessToken.split('.')[1];
+    const decode = JSON.parse(atob(dec));
+    const userExist = await User.findOne({ _id: decode.user_create });
+    if (!userExist)
+      return res.status(400).json({
+        success: false,
+        message: "You are not registered.",
+      });
+    if (userExist.otpuser === otp) {
+      await User.updateOne({ _id: decode.user_create }, { isVerified: true });
+      res.status(200).json({
+        success: true,
+        message: "OTP correct. User is verified.",
+      });
+    }
+    else {
+      res.status(400).json({
+        success: false,
+        message: "Invalid OTP.",
+      });
+
+    }
+  }
+  catch (err) {
+    res.status(400).json({
+      success: false,
+      message: err,
+    });
+  }
+});
+
 
 // get all users
 
