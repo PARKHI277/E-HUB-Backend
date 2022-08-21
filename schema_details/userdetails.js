@@ -1,8 +1,5 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
-const saltRounds = 10;
-const jwt = require("jsonwebtoken");
 
 const Schema = mongoose.Schema;
 
@@ -44,7 +41,7 @@ const UserSchema = new Schema({
     default: false,
   },
   otpuser: {
-    type: String,
+    type: Number,
   },
 });
 
