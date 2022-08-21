@@ -8,11 +8,7 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
 const atob = require("atob");
-const {
-  handleValidationError,
-  handleDuplicateField,
-  handleCastError,
-} = require("../controller/usercontroller");
+
 const emailer = require("../services/email");
 
 // user signup
@@ -162,7 +158,7 @@ router.patch("/signup/verify", async (req, res) => {
         success: false,
         message: "Send OTP",
       });
-    const dec = accessToken.split('.')[1];
+    const dec = accessToken.split(".")[1];
     const decode = JSON.parse(atob(dec));
     const userExist = await User.findOne({ _id: decode.user_create });
     if (!userExist)
@@ -176,23 +172,19 @@ router.patch("/signup/verify", async (req, res) => {
         success: true,
         message: "OTP correct. User is verified.",
       });
-    }
-    else {
+    } else {
       res.status(400).json({
         success: false,
         message: "Invalid OTP.",
       });
-
     }
-  }
-  catch (err) {
+  } catch (err) {
     res.status(400).json({
       success: false,
       message: err,
     });
   }
 });
-
 
 // get all users
 
