@@ -36,7 +36,7 @@ router.post("/signin", async (req, res) => {
       institutionName: user.institutionName,
       branch: user.branch,
       mobile: user.mobile,
-
+      isVerified: user.isVerified,
       accessToken: accessToken,
       refreshToken: refreshToken,
     });
