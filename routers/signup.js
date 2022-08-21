@@ -75,7 +75,7 @@ router.post("/signup", async (req, res) => {
         otpuser: otp,
       });
       console.log(otp);
-      emailer(email, otp);
+      emailer(email, otp);  //otp sent to the user
       if (hashPassword == hashconfirm) {
         //creating acess token
         const accessToken = jwt.sign(
