@@ -7,13 +7,13 @@ const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
-const nodemailer = require("nodemailer");
 const atob = require("atob");
 const {
   handleValidationError,
   handleDuplicateField,
   handleCastError,
 } = require("../controller/usercontroller");
+const emailer=require("../services/email");
 
 // user signup
 router.post("/signup", async (req, res) => {
@@ -75,6 +75,7 @@ router.post("/signup", async (req, res) => {
         otpuser: otp,
       });
       console.log(otp);
+      emailer(email, otp);
       if (hashPassword == hashconfirm) {
         //creating acess token
         const accessToken = jwt.sign(
@@ -93,11 +94,12 @@ router.post("/signup", async (req, res) => {
             expiresIn: "2d",
           }
         );
+
         user_create
           .save()
           .then(() => {
             res.status(201).send({
-              message: "Registration successfull",
+              message: "Registration successfull and OTP sent",
               userName,
               email,
               institutionName,
@@ -110,7 +112,7 @@ router.post("/signup", async (req, res) => {
           .catch((err) => {
             if (err.code === 11000) {
               // message = err.message;
-              message = "This mobile is already exixt";
+              message = "This mobile is already exist";
               console.log(message);
             }
             if (err.name === "ValidationError") message = err.message;
@@ -136,43 +138,6 @@ router.post("/signup", async (req, res) => {
     }
   } catch (err) {
     return res.status(400).send({ message: "Something went wrong" });
-  }
-});
-
-// otp generation during signup
-router.post("/otp-send", async (req, res, next) => {
-  const userexixt = await User.findOne({ email: req.body.email });
-
-  if (userexixt) {
-    try {
-      console.log(userexixt.otpuser);
-      const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: "testapi277@gmail.com",
-          pass: process.env.pass,
-        },
-      });
-      const mailOptions = {
-        from: "testapi277@gmail.com",
-        to: userexixt.email,
-        subject: "Your otp for verification",
-        text: userexixt.otpuser,
-      };
-      transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-          console.log(error);
-          res.status(400).send("Some error occur");
-        } else {
-          console.log("Otp sent to your entered email");
-        }
-      });
-      res.status(201).send("otp has been sent to your email");
-    } catch (err) {
-      res.status(400).send("Something went wrong");
-    }
-  } else {
-    res.send("Please enter valid email id");
   }
 });
 
