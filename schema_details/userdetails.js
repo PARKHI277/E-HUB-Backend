@@ -41,12 +41,9 @@ const UserSchema = new Schema({
     default: false,
   },
   otpuser: {
-    type: Number
+    type: Number,
   },
-}
-//, {timestamps: true}
-);
-//UserSchema.index({"otpuser":1},{expireAfterSeconds: 10});
+});
 
 // UserSchema.methods.generateAcessToken = async function (req, res, next) {
 //   try {
