@@ -1,19 +1,24 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
-const validate = require("validator");
 
 const Schema = mongoose.Schema;
-
-const handbookSchema = new Schema({
-  title: {
+const HandbookSchema = new Schema({
+  bookTitle: {
     type: String,
     required: true,
   },
-  content: {
+  bookTagline: {
     type: String,
     required: true,
+  },
+  category: {
+    type: String,
+    required: true,
+  },
+  pdfUrl: {
+    //////
   },
 });
 
-const Handbook = new mongoose.model("Handbook", handbookSchema);
+const Handbook = new mongoose.model("Handbook", HandbookSchema);
 module.exports = Handbook;
