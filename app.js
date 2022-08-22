@@ -7,7 +7,7 @@ const cookieparser = require("cookie-parser");
 const SignupRouter = require("./routers/signup");
 const LoginRouter = require("./routers/login");
 const BodyParser = require("body-parser");
-
+const handbookrouter = require("./routers/handbook");
 const resourcerouter = require("./routers/resource");
 const mentorrouter = require("./routers/mentor");
 const hiringrouter = require("./routers/hiring");
@@ -73,7 +73,7 @@ app.use("/api/v1", mentorrouter);
 app.use("/api/v1", hiringrouter);
 app.use("/api/v1", industryrouter);
 app.use("/api/v1", internshipRouter);
-
+app.use("/api/v1", handbookrouter);
 app.use("/api/v1", collegerouter);
 app.use("/api/v1", teamrouter);
 app.use("/api/v1", branchrouter);
