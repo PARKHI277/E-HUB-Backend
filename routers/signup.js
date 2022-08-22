@@ -11,6 +11,10 @@ const atob = require("atob");
 
 const emailer = require("../services/email");
 
+function update(name,email,otpuser){
+ // name.updateOne(email, {$set:{otpuser: null}});
+ console.log("ds");
+};
 // user signup
 router.post("/signup", async (req, res) => {
   try {
@@ -23,6 +27,7 @@ router.post("/signup", async (req, res) => {
       password,
       confirmPassword,
     } = await req.body;
+    
     if (
       !userName &&
       !branch &&
@@ -71,7 +76,7 @@ router.post("/signup", async (req, res) => {
         otpuser: otp,
       });
       console.log(otp);
-      emailer(email, otp);  //otp sent to the user
+      
       if (hashPassword == hashconfirm) {
         //creating acess token
         const accessToken = jwt.sign(
@@ -90,10 +95,13 @@ router.post("/signup", async (req, res) => {
             expiresIn: "2d",
           }
         );
-
+        emailer(email, otp);  //otp sent to the user
+        
         user_create
           .save()
-          .then(() => {
+          .then(() => {setTimeout(() => {
+            User.updateOne({_id:user_create._id}, {$set:{otpuser:0}});
+            console.log("Sd");}, 10000);
             res.status(201).send({
               message: "Registration successfull and OTP sent",
               userName,
@@ -131,6 +139,8 @@ router.post("/signup", async (req, res) => {
         mesaage:
           "Password should be longer than 8 characters and it has to include at least one number,one uppercase letter , one special charcter and one lowercase , Password should start from uppercase Letter",
       });
+//
+
     }
   } catch (err) {
     return res.status(400).send({ message: "Something went wrong" });
