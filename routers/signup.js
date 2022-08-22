@@ -11,10 +11,7 @@ const atob = require("atob");
 
 const emailer = require("../services/email");
 
-function update(name,email,otpuser){
- // name.updateOne(email, {$set:{otpuser: null}});
- console.log("ds");
-};
+
 // user signup
 router.post("/signup", async (req, res) => {
   try {
