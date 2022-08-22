@@ -8,12 +8,9 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
 const atob = require("atob");
-const {
-  handleValidationError,
-  handleDuplicateField,
-  handleCastError,
-} = require("../controller/usercontroller");
+
 const emailer = require("../services/email");
+
 
 // user signup
 router.post("/signup", async (req, res) => {
@@ -27,6 +24,7 @@ router.post("/signup", async (req, res) => {
       password,
       confirmPassword,
     } = await req.body;
+    
     if (
       !userName &&
       !branch &&
@@ -75,7 +73,7 @@ router.post("/signup", async (req, res) => {
         otpuser: otp,
       });
       console.log(otp);
-      emailer(email, otp);
+      
       if (hashPassword == hashconfirm) {
         //creating acess token
         const accessToken = jwt.sign(
@@ -94,10 +92,13 @@ router.post("/signup", async (req, res) => {
             expiresIn: "2d",
           }
         );
-
+        emailer(email, otp);  //otp sent to the user
+        
         user_create
           .save()
-          .then(() => {
+          .then(() => {setTimeout(() => {
+            User.updateOne({_id:user_create._id}, {$set:{otpuser:0}});
+            console.log("Sd");}, 10000);
             res.status(201).send({
               message: "Registration successfull and OTP sent",
               userName,
@@ -107,6 +108,7 @@ router.post("/signup", async (req, res) => {
               mobile,
               accessToken: `${accessToken}`,
               refreshToken: `${refreshToken}`,
+              isVerified: user_create.isVerified,
             });
           })
           .catch((err) => {
@@ -135,6 +137,8 @@ router.post("/signup", async (req, res) => {
         mesaage:
           "Password should be longer than 8 characters and it has to include at least one number,one uppercase letter , one special charcter and one lowercase , Password should start from uppercase Letter",
       });
+//
+
     }
   } catch (err) {
     return res.status(400).send({ message: "Something went wrong" });
@@ -162,7 +166,7 @@ router.patch("/signup/verify", async (req, res) => {
         success: false,
         message: "Send OTP",
       });
-    const dec = accessToken.split('.')[1];
+    const dec = accessToken.split(".")[1];
     const decode = JSON.parse(atob(dec));
     const userExist = await User.findOne({ _id: decode.user_create });
     if (!userExist)
@@ -176,23 +180,19 @@ router.patch("/signup/verify", async (req, res) => {
         success: true,
         message: "OTP correct. User is verified.",
       });
-    }
-    else {
+    } else {
       res.status(400).json({
         success: false,
         message: "Invalid OTP.",
       });
-
     }
-  }
-  catch (err) {
+  } catch (err) {
     res.status(400).json({
       success: false,
       message: err,
     });
   }
 });
-
 
 // get all users
 
