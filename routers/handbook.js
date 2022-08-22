@@ -1,6 +1,6 @@
 const express = require("express");
 const router = new express.Router();
-const Handbook = require("../schema_details/Handbook");
+const Handbook = require("../schema_details/handbook");
 
 router.post("/handbook", async (req, res, next) => {
   try {
