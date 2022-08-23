@@ -168,6 +168,7 @@ router.patch("/signup/verify", async (req, res) => {
       });
     const dec = accessToken.split(".")[1];
     const decode = JSON.parse(atob(dec));
+  //  console.log(decode);
     const userExist = await User.findOne({ _id: decode.user_create });
     if (!userExist)
       return res.status(400).json({
