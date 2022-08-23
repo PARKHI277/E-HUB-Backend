@@ -24,7 +24,7 @@ router.post("/signup", async (req, res) => {
       password,
       confirmPassword,
     } = await req.body;
-    
+
     if (
       !userName &&
       !branch &&
@@ -73,7 +73,7 @@ router.post("/signup", async (req, res) => {
         otpuser: otp,
       });
       console.log(otp);
-      
+
       if (hashPassword == hashconfirm) {
         //creating acess token
         const accessToken = jwt.sign(
@@ -93,12 +93,20 @@ router.post("/signup", async (req, res) => {
           }
         );
         emailer(email, otp);  //otp sent to the user
-        
+
         user_create
           .save()
-          .then(() => {setTimeout(() => {
-            User.updateOne({_id:user_create._id}, {$set:{otpuser:0}});
-            console.log("Sd");}, 10000);
+          .then(() => {
+            setTimeout(() => {
+              User.findByIdAndUpdate(user_create._id, { $set: { otpuser: null } }, function (err, docs) {
+                if (err) {
+                  console.log(err)
+                }
+                else {
+                  console.log("Updated User : ", docs);
+                }
+              });
+            }, 300000);
             res.status(201).send({
               message: "Registration successfull and OTP sent",
               userName,
@@ -136,7 +144,7 @@ router.post("/signup", async (req, res) => {
         mesaage:
           "Password should be longer than 8 characters and it has to include at least one number,one uppercase letter , one special charcter and one lowercase , Password should start from uppercase Letter",
       });
-//
+      //
 
     }
   } catch (err) {
@@ -166,23 +174,25 @@ router.patch("/signup/verify", async (req, res) => {
         message: "Send OTP",
       });
     const dec = accessToken.split(".")[1];
-  //  console.log(dec);
-    if(!dec)
-    {return res.status(400).json({
-      success: false,
-      message: "Send access token in proper format.",
-    });}
+    //  console.log(dec);
+    if (!dec) {
+      return res.status(400).json({
+        success: false,
+        message: "Send access token in proper format.",
+      });
+    }
     const decode = JSON.parse(atob(dec));
-  //console.log(decode);
+    //console.log(decode);
 
-  if(!decode)
-    {return res.status(400).json({
-      success: false,
-      message: "Send access token in proper format.",
-    });}
-    
+    if (!decode) {
+      return res.status(400).json({
+        success: false,
+        message: "Send access token in proper format.",
+      });
+    }
+
     const userExist = await User.findById(decode.user_create);
-  //  console.log(userExist);
+    //  console.log(userExist);
     if (!userExist)
       return res.status(400).json({
         success: false,
