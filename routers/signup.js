@@ -166,9 +166,23 @@ router.patch("/signup/verify", async (req, res) => {
         message: "Send OTP",
       });
     const dec = accessToken.split(".")[1];
+  //  console.log(dec);
+    if(!dec)
+    {return res.status(400).json({
+      success: false,
+      message: "Send access token in proper format.",
+    });}
     const decode = JSON.parse(atob(dec));
-  //  console.log(decode);
-    const userExist = await User.findOne({ _id: decode.user_create });
+  //console.log(decode);
+
+  if(!decode)
+    {return res.status(400).json({
+      success: false,
+      message: "Send access token in proper format.",
+    });}
+    
+    const userExist = await User.findById(decode.user_create);
+  //  console.log(userExist);
     if (!userExist)
       return res.status(400).json({
         success: false,
