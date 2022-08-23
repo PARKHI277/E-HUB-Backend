@@ -108,7 +108,6 @@ router.post("/signup", async (req, res) => {
               mobile,
               accessToken: `${accessToken}`,
               refreshToken: `${refreshToken}`,
-              isVerified: user_create.isVerified,
             });
           })
           .catch((err) => {
