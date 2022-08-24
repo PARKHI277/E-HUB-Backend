@@ -13,6 +13,7 @@ const mentorrouter = require("./routers/mentor");
 const hiringrouter = require("./routers/hiring");
 const industryrouter = require("./routers/industrypersonality");
 const internshipRouter = require("./routers/internship");
+const youtube = require("./routers/youtubeid");
 
 const collegerouter = require("./routers/college");
 const teamrouter = require("./routers/team");
@@ -77,6 +78,7 @@ app.use("/api/v1", handbookrouter);
 app.use("/api/v1", collegerouter);
 app.use("/api/v1", teamrouter);
 app.use("/api/v1", branchrouter);
+app.use("/api/v1", youtube);
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`App is running on port ${PORT}`);
