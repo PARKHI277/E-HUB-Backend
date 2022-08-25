@@ -16,7 +16,10 @@ const HandbookSchema = new Schema({
     required: true,
   },
   pdfUrl: { type: String },
-  imageUrl: { type: String },
+  bookimgUrl: {
+    type: String,
+  },
+  imageUrl: { type: Array },
 });
 
 const Handbook = new mongoose.model("Handbook", HandbookSchema);
