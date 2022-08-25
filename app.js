@@ -79,6 +79,7 @@ app.use("/api/v1", collegerouter);
 app.use("/api/v1", teamrouter);
 app.use("/api/v1", branchrouter);
 app.use("/api/v1", youtube);
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`App is running on port ${PORT}`);

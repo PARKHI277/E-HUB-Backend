@@ -6,17 +6,24 @@ const Youtube = require("../schema_details/youtube");
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
-// called api for adding id in datbase and sending back response to admin
-router.get("/youtubeapi/:youtubeid", async (req, res) => {
-  const youtubeid = req.params.youtubeid;
-  console.log(youtubeid);
-  const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${youtubeid}&key=${process.env.Youtubekey}`;
+// admin side
+router.post("/youtubeapi/:videoId", async (req, res) => {
+  const videoId = req.params.videoId;
+  console.log(videoId);
+  // const idExist = await Youtube.findOne({ videoId });
+  // if (idExist) {
+  //   return res.status(200).send({ message: "This videoId already exists." });
+  // }
+  const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${process.env.Youtubekey}`;
   const youtube = await fetch(url);
   let response = await youtube.json();
   var channels = response.items;
   // for console
   if (channels.length == 0) {
     console.log("No channel found.");
+    return res
+      .status(400)
+      .send({ message: "No channel found with this videoid" });
   } else {
     console.log(
       "This channel's ID is %s. Its title is '%s', and " + "it has %s views.",
@@ -26,16 +33,21 @@ router.get("/youtubeapi/:youtubeid", async (req, res) => {
       channels[0].snippet.channelTitle
     );
   }
+  // console.log(channels[0].snippet.thumbnails);
   // saving in database
   try {
     (id = channels[0].id),
       (title = channels[0].snippet.title),
       (publishedAt = channels[0].snippet.publishedAt),
-      (channelTitle = channels[0].snippet.channelTitle);
+      (channelTitle = channels[0].snippet.channelTitle),
+      (description = channels[0].snippet.description),
+      (thumbnails = channels[0].snippet.thumbnails);
     const youtube_id = new Youtube({
-      id,
-      title,
+      videoId,
       publishedAt,
+      title,
+      description,
+      thumbnails,
       channelTitle,
     });
     const saveid = await youtube_id.save();
@@ -47,19 +59,15 @@ router.get("/youtubeapi/:youtubeid", async (req, res) => {
   // res.status(200).send(response);
 });
 
-// admin api
-router.post("/youtubeid", async (req, res) => {
+router.get("/youtubeapi", async (req, res) => {
   try {
-    const videoid = req.body.videoId;
-    const api_url = `/youtubeapi/${videoid}`;
-    const youtube = await fetch(api_url);
-    const response = await youtube.json();
-    const data = response.items[0].snippet.title;
-    console.log(data);
+    const allids = await Youtube.find();
+
+    res.status(200).send(allids);
   } catch (err) {
     console.log(err);
-
-    res.status(400).send(err);
+    res.status(500).send(err);
   }
 });
+
 module.exports = router;
