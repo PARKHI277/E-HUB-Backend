@@ -16,7 +16,7 @@ const HandbookSchema = new Schema({
     required: true,
   },
   pdfUrl: { type: String },
-  bookimgUrl: {
+  bookingUrl: {
     type: String,
   },
   imageUrl: { type: Array },
