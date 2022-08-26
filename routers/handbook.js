@@ -4,7 +4,7 @@ const Handbook = require("../schema_details/handbook");
 
 router.post("/handbook", async (req, res, next) => {
   try {
-    const { bookTitle, bookTagline, category, bookimgUrl, pdfUrl, imageUrl } =
+    const { bookTitle, bookTagline, category, bookingUrl, pdfUrl, imageUrl } =
       await req.body;
     const handbook_create = new Handbook({
       bookTitle,
@@ -12,7 +12,7 @@ router.post("/handbook", async (req, res, next) => {
       category,
       pdfUrl,
       imageUrl,
-      bookimgUrl,
+      bookingUrl,
     });
     const savehandbook = await handbook_create.save();
     res.status(201).send(savehandbook);
