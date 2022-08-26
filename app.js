@@ -26,7 +26,6 @@ const app = express();
 require("./config/passport")(passport);
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieparser());
-const morgan = require("morgan");
 
 // SESSION MIDDLEWARE
 app.use(
