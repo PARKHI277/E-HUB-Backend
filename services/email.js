@@ -13,7 +13,7 @@ const emailer = function emailer(to, text) {
     from: process.env.email,
     to: to,
     subject: "OTP for email verification",
-    text: "Your OTP is " + text,
+    text: "Your OTP is " + text + " . Expires in 5 minutes.",
   };
 
   transporter.sendMail(mailOptions, function (error, info) {
