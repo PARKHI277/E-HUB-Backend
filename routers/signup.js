@@ -101,10 +101,10 @@ router.post("/signup", async (req, res) => {
               User.findByIdAndUpdate(user_create._id, { $set: { otpuser: null } }, function (err, docs) {
                 if (err) {
                   console.log(err)
-                 }
-                // else {
-                //   console.log("Updated User : ", docs);
-                // }
+                }
+                else {
+                  console.log("Updated User : ", docs);
+                }
               });
             }, 300000);
             res.status(201).send({
@@ -121,10 +121,10 @@ router.post("/signup", async (req, res) => {
           .catch((err) => {
             if (err.code === 11000) {
               // message = err.message;
-              message = "Mobile number already exists";
+              message = "This mobile is already exist";
               console.log(message);
             }
-            if (err.name === "ValidationError"){ message = err.message;}
+            if (err.name === "ValidationError") message = err.message;
             if (err.name === "CastError") message = err.message;
             if (err.name === "EmptyError") message = err.message;
             return res.status(400).json({
