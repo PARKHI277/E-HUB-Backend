@@ -10,7 +10,7 @@ const campusSchema = new Schema({
     required: true,
   },
   collegePhoto: {
-    type: String,
+    type: Array,
     required: true,
   },
   eventName: {
