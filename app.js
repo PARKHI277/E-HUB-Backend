@@ -22,6 +22,7 @@ const branchrouter = require("./routers/Branch");
 const passport = require("passport");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
+const domainrouter = require("./routers/domain");
 
 const app = express();
 require("./config/passport")(passport);
@@ -80,7 +81,7 @@ app.use("/api/v1", teamrouter);
 app.use("/api/v1", branchrouter);
 app.use("/api/v1", youtube);
 app.use("/api/v1", campusactivity);
-
+app.use("/api/v1", domainrouter);
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`App is running on port ${PORT}`);
