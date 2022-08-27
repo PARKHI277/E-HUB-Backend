@@ -15,7 +15,7 @@ const hiringrouter = require("./routers/hiring");
 const industryrouter = require("./routers/industrypersonality");
 const internshipRouter = require("./routers/internship");
 const youtube = require("./routers/youtubeid");
-
+const campusactivity = require("./routers/campus");
 const collegerouter = require("./routers/college");
 const teamrouter = require("./routers/team");
 const branchrouter = require("./routers/Branch");
@@ -79,6 +79,7 @@ app.use("/api/v1", collegerouter);
 app.use("/api/v1", teamrouter);
 app.use("/api/v1", branchrouter);
 app.use("/api/v1", youtube);
+app.use("/api/v1", campusactivity);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
