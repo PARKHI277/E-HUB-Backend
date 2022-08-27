@@ -1,6 +1,11 @@
 const express = require("express");
 const router = new express.Router();
 const Event = require("../schema_details/event");
+function truncate(str, no_words) {
+  return str.split(" ").splice(5,no_words).join(" ");
+}
+
+
 
 router.post("/event", async (req, res, next) => {
   try {
@@ -19,9 +24,20 @@ router.post("/event", async (req, res, next) => {
     });
     const saveEvent = await event_create.save();
     res.status(201).send(saveEvent);
-  } catch (err) {
-    console.log(err);
-    res.status(400).send(err);
+  } catch (err) {if (err.code === 11000) {
+    message = err.message;
+ //  message = "Mobile number already exists";
+   console.log(message);
+ }
+    if (err.name === "ValidationError")
+        message=err.message;
+
+      if (err.name === "CastError") message = err.message;
+      if (err.name === "EmptyError") message = err.message;
+      return res.status(400).json({
+        success: false,
+        message:truncate(message,8)
+    });
   }
 });
 
