@@ -4,15 +4,20 @@ const Handbook = require("../schema_details/handbook");
 
 router.post("/handbook", async (req, res, next) => {
   try {
-    const { bookTitle, bookTagline, category, bookingUrl, pdfUrl, imageUrl } =
+    const { bookTitle, bookTagline, category, bookimgUrl, pdfUrl, imageUrl } =
       await req.body;
+    if (!bookTitle && !bookTagline && !category && !bookimgUrl && !pdfUrl)
+      return res.status(400).json({
+        success: false,
+        message: "Please fill all the fields",
+      });
     const handbook_create = new Handbook({
       bookTitle,
       bookTagline,
       category,
       pdfUrl,
       imageUrl,
-      bookingUrl,
+      bookimgUrl,
     });
     const savehandbook = await handbook_create.save();
     res.status(201).send(savehandbook);
