@@ -15,19 +15,19 @@ const hiringrouter = require("./routers/hiring");
 const industryrouter = require("./routers/industrypersonality");
 const internshipRouter = require("./routers/internship");
 const youtube = require("./routers/youtubeid");
-
 const collegerouter = require("./routers/college");
 const teamrouter = require("./routers/team");
 const branchrouter = require("./routers/Branch");
 const passport = require("passport");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
+const errorController = require('./controllers/errorController');
 
 const app = express();
 require("./config/passport")(passport);
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieparser());
-
+app.use(errorController);
 // SESSION MIDDLEWARE
 app.use(
   session({
