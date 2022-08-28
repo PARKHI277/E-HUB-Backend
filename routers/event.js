@@ -48,7 +48,18 @@ router.get("/event", async (req, res) => {
 });
 
 router.patch("/event/:id", async (req, res) => {
-  try {
+  try { if (
+    !mentorName &&
+    !mentorImage &&
+    !eventName &&
+    !description &&
+    !dateTime &&
+    !posterUrl
+  )
+    return res.status(400).json({
+      success: false,
+      message: "Please fill atleast one field to update",
+    });
     await Event.findByIdAndUpdate(req.params.id, {
       $set: req.body,
     });
