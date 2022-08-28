@@ -1,7 +1,7 @@
 const express = require("express");
 const router = new express.Router();
 const Campus = require("../schema_details/Campus");
-
+const errorController = require("../controllers/errorController");
 // admin side
 router.post("/campus", async (req, res) => {
   try {
@@ -37,8 +37,7 @@ router.post("/campus", async (req, res) => {
     const saveCampus = await campus_create.save();
     res.status(201).send(saveCampus);
   } catch (err) {
-    console.log(err);
-    res.status(400).send(err);
+    errorController(err, req, res, next);
   }
 });
 

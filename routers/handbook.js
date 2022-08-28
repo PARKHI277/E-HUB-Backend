@@ -1,11 +1,14 @@
 const express = require("express");
 const router = new express.Router();
 const Handbook = require("../schema_details/handbook");
+const errorController = require("../controllers/errorController");
 
 router.post("/handbook", async (req, res, next) => {
   try {
     const { bookTitle, bookTagline, category, bookimgUrl, pdfUrl, imageUrl } =
       await req.body;
+    const bookexixt = await Handbook.find({ bookTitle });
+
     if (!bookTitle && !bookTagline && !category && !bookimgUrl && !pdfUrl)
       return res.status(400).json({
         success: false,
@@ -22,8 +25,7 @@ router.post("/handbook", async (req, res, next) => {
     const savehandbook = await handbook_create.save();
     res.status(201).send(savehandbook);
   } catch (err) {
-    console.log(err);
-    res.status(400).send(err);
+    errorController(err, req, res, next);
   }
 });
 
