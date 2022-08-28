@@ -118,18 +118,26 @@ router.post("/signup", async (req, res) => {
               refreshToken: `${refreshToken}`,
             });
           })
-          .catch((err) => {
+          .catch((err) => {let message;
             if (err.code === 11000) {
               // message = err.message;
-              message = "This mobile is already exist";
+              message = "Mobile number already exists";
               console.log(message);
             }
-            if (err.name === "ValidationError") message = err.message;
+            if (err.name === "ValidationError") {
+              if(err.message=='User validation failed: email: Email is required')
+              message ="Email is required";
+               if(err.message=='User validation failed: userName: username minimum length should be 3')
+              message ="Username is required";
+               if(err.message=='User validation failed: mobile: mobile number is required')
+              message ="Mobile number is required";
+              //message=err.message;
+           }
             if (err.name === "CastError") message = err.message;
             if (err.name === "EmptyError") message = err.message;
             return res.status(400).json({
               success: false,
-              message: message,
+              message: message
             });
             // console.log(err.message);
             //  res.status(400).send(err.message);
@@ -222,7 +230,7 @@ router.patch("/signup/verify", async (req, res) => {
 
 router.get("/allusers", async (req, res) => {
   try {
-    const allusers = await User.find();
+    const allusers = await User.find().select("-password -confirmPassword -otpuser");
 
     res.status(200).send(allusers);
   } catch (err) {
