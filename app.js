@@ -15,19 +15,22 @@ const hiringrouter = require("./routers/hiring");
 const industryrouter = require("./routers/industrypersonality");
 const internshipRouter = require("./routers/internship");
 const youtube = require("./routers/youtubeid");
-
+const campusactivity = require("./routers/campus");
 const collegerouter = require("./routers/college");
 const teamrouter = require("./routers/team");
 const branchrouter = require("./routers/Branch");
 const passport = require("passport");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
+const errorController = require('./controllers/errorController');
+const domainrouter = require("./routers/domain");
+
 
 const app = express();
 require("./config/passport")(passport);
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieparser());
-
+app.use(errorController);
 // SESSION MIDDLEWARE
 app.use(
   session({
@@ -79,7 +82,8 @@ app.use("/api/v1", collegerouter);
 app.use("/api/v1", teamrouter);
 app.use("/api/v1", branchrouter);
 app.use("/api/v1", youtube);
-
+app.use("/api/v1", campusactivity);
+app.use("/api/v1", domainrouter);
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`App is running on port ${PORT}`);
