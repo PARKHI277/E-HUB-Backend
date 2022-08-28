@@ -22,13 +22,15 @@ const branchrouter = require("./routers/Branch");
 const passport = require("passport");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
+const errorController = require('./controllers/errorController');
 const domainrouter = require("./routers/domain");
+
 
 const app = express();
 require("./config/passport")(passport);
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieparser());
-
+app.use(errorController);
 // SESSION MIDDLEWARE
 app.use(
   session({

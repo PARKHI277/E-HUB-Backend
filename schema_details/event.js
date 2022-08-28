@@ -1,30 +1,30 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
-
+const validator=require('validator');
 const Schema = mongoose.Schema;
 const eventSchema = new Schema({
   mentorName: {
     type: String,
-    required: true,
+    required: [true,'Enter a mentorName.']
   },
   mentorImage: {
     type: Array,
-    required: true,
+    required: [true,'Enter a mentorImage.']
   },
   eventName: {
     type: String,
-    required: true,
+    required: [true,'Enter a eventName.']
   },
   eventCode: {
     type: String
   },
   description: {
     type: String,
-    required: true,
+    required: [true,'Enter a description.']
   },
   dateTime: {
     type: Date,
-    required: true,
+    required: [true,'Enter a dateTime.']
   },
   position: {
     type: String,
@@ -34,7 +34,7 @@ const eventSchema = new Schema({
   },
   posterUrl: {
     type: String,
-    required: true
+    required: [true,'Enter a posterUrl.']
   },
 });
 
