@@ -43,33 +43,37 @@ router.get("/event", async (req, res) => {
 
     res.status(200).send(allEvents);
   } catch (err) {
-    res.status(500).send(err);
+    return res.status(400).json({
+      success: false,
+      message:err
+    });
   }
 });
 
 router.patch("/event/:id", async (req, res) => {
-  try { if (
-    !mentorName &&
-    !mentorImage &&
-    !eventName &&
-    !description &&
-    !dateTime &&
-    !posterUrl
-  )
-    return res.status(400).json({
-      success: false,
-      message: "Please fill atleast one field to update",
-    });
-    await Event.findByIdAndUpdate(req.params.id, {
+   try { 
+    //const id=JSON.parse(req.params.id);
+  //   const eventExist =Event.findOne({id });
+  // if (!eventExist) {
+  //   return res.status(400).send({ success:false,
+  //     message: "Id doesn't exists." });
+  // }
+    Event.findByIdAndUpdate(req.params.id, {
       $set: req.body,
-    });
-    return res.status(400).json({
-      success: true,
-      message: "Event got updated"
-    });
+    }, function (err, docs) {
+      if (err){
+          console.log(err)
+      }
+      else{res.status(200).json({
+        success: true,
+        message: "Event got updated"
+      });
+      }});
+ 
   } catch (err) {
     return res.status(400).json({
-      success: false
+      success: false,
+      message:"Enter fields"
     });
   }
 });
@@ -77,7 +81,7 @@ router.patch("/event/:id", async (req, res) => {
 router.delete("/event/:id", async (req, res) => {
   try {
     await Event.findByIdAndDelete(req.params.id);
-    return res.status(400).json({
+    return res.status(200).json({
       success: true,
       message: "Event got deleted"
     });
