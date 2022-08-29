@@ -8,14 +8,17 @@ const handleDuplicateKeyError = (err, res) => {
 
 const handleValidationError = (err, res) => {
     let errors = Object.values(err.errors).map(el => el.message);
-    let fields = Object.values(err.errors).map(el => el.path);
+    //let fields = Object.values(err.errors).map(el => el.path);
     let code = 400;
 
     if(errors.length > 1) {
         const formattedErrors = errors.join(' ');
-        res.status(code).send({success:false,message: formattedErrors, field: fields});
+        res.status(code).send({success:false,message: formattedErrors//, field: fields
+        });
     } else {
-        res.status(code).send({success:false,message: errors, field: fields})
+        res.status(code).send({success:false,message: errors
+          //  , field: fields
+        })
     }
 }
 

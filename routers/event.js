@@ -51,7 +51,18 @@ router.get("/event", async (req, res) => {
 });
 
 router.patch("/event/:id", async (req, res) => {
-   try { 
+   try {  if (
+    !mentorName ||
+    !mentorImage ||
+    !eventName ||
+    !description ||
+    !dateTime ||
+    !posterUrl
+  )
+    return res.status(400).json({
+      success: false,
+      message: "Please fill atleast one field.",
+    });
     //const id=JSON.parse(req.params.id);
   //   const eventExist =Event.findOne({id });
   // if (!eventExist) {
