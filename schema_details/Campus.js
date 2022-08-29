@@ -7,19 +7,19 @@ const Schema = mongoose.Schema;
 const campusSchema = new Schema({
   collegeName: {
     type: String,
-    required: [true, "collegeName is requires"],
+    required: [true, "College Name is requires"],
   },
   collegePhoto: {
     type: Array,
-    required: [true, "collegePhoto is requires"],
+    required: [true, "College Image is requires"],
   },
   eventName: {
     type: String,
-    required: [true, "eventName is requires"],
+    required: [true, "EventName is requires"],
   },
   description: {
     type: String,
-    required: [true, "description is requires"],
+    required: [true, "Description is requires"],
   },
   condition: {
     type: String,
@@ -29,7 +29,7 @@ const campusSchema = new Schema({
   },
   eventDate: {
     type: Date,
-    required: [true, "eventDate is requires"],
+    required: [true, "EventDate is requires"],
   },
   price: {
     type: String,

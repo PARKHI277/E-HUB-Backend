@@ -3,7 +3,7 @@ const router = new express.Router();
 const Campus = require("../schema_details/Campus");
 const errorController = require("../controllers/errorController");
 // admin side
-router.post("/campus", async (req, res) => {
+router.post("/campus", async (req, res, next) => {
   try {
     const {
       collegeName,

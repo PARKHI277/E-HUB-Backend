@@ -1,9 +1,9 @@
 const express = require("express");
 const router = new express.Router();
 const College = require("../schema_details/colleges");
-
+const errorController = require("../controllers/errorController");
 // admin side
-router.post("/college", async (req, res) => {
+router.post("/college", async (req, res, next) => {
   try {
     const { collegeName } = await req.body;
     const collegeExist = await College.findOne({ collegeName });
@@ -19,8 +19,7 @@ router.post("/college", async (req, res) => {
     const savecollege = await college_create.save();
     res.status(201).send(savecollege);
   } catch (err) {
-    console.log(err);
-    res.status(400).send(err);
+    errorController(err, req, res, next);
   }
 });
 
