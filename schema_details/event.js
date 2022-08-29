@@ -5,15 +5,15 @@ const Schema = mongoose.Schema;
 const eventSchema = new Schema({
   mentorName: {
     type: String,
-    required: [true,'Enter a mentorName.']
+    required: [true,'Enter a mentor name.']
   },
   mentorImage: {
     type: Array,
-    required: [true,'Enter a mentorImage.']
+    required: [true,'Enter a mentor image.']
   },
   eventName: {
     type: String,
-    required: [true,'Enter a eventName.']
+    required: [true,'Enter a event name.']
   },
   eventCode: {
     type: String
@@ -24,7 +24,7 @@ const eventSchema = new Schema({
   },
   dateTime: {
     type: Date,
-    required: [true,'Enter a dateTime.']
+    required: [true,'Enter a date and time.']
   },
   position: {
     type: String,
@@ -34,7 +34,7 @@ const eventSchema = new Schema({
   },
   posterUrl: {
     type: String,
-    required: [true,'Enter a posterUrl.']
+    required: [true,'Enter poster url.']
   },
 });
 
