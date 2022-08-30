@@ -9,7 +9,7 @@ router.post("/college", async (req, res, next) => {
     const collegeExist = await College.findOne({ collegeName });
 
     if (collegeExist) {
-      return res.status(200).send({ message: "college already exists." });
+      return res.status(200).send({ message: "College already exists." });
     }
 
     const college_create = new College({

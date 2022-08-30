@@ -55,30 +55,64 @@ router.get("/campus", async (req, res) => {
 
 router.patch("/campus/:id", async (req, res) => {
   try {
-    await Campus.findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    });
-    return res.status(400).json({
-      success: true,
-      message: "Campus Details got updated",
-    });
+    if (
+      !collegeName ||
+      !collegePhoto ||
+      !eventName ||
+      !description ||
+      !condition ||
+      !eventType ||
+      !eventDate ||
+      !price
+    )
+      return res.status(400).json({
+        success: false,
+        message: "Please fill atleast one field.",
+      });
+
+    Campus.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: req.body,
+      },
+      function (err, docs) {
+        if (err) {
+          console.log(err);
+        } else {
+          res.status(200).json({
+            success: true,
+            message: "Campus Details got updated ",
+          });
+        }
+      }
+    );
   } catch (err) {
     return res.status(400).json({
       success: false,
+      message: "Enter fields to update ",
     });
   }
 });
 
 router.delete("/campus/:id", async (req, res) => {
   try {
-    await Campus.findByIdAndDelete(req.params.id);
-    return res.status(400).json({
-      success: true,
-      message: "Campus Details got deleted",
-    });
+    const campus = await Campus.findByIdAndDelete(req.params.id);
+    if (!campus) {
+      return res.status(400).json({
+        success: false,
+        message: "This campus id doesn't exixt",
+      });
+    } else {
+      return res.status(200).json({
+        success: true,
+        message: "Campus Details got deleted",
+      });
+    }
   } catch (err) {
+    console.log(err);
     return res.status(400).json({
       success: false,
+      message: "Please enter valid id",
     });
   }
 });
