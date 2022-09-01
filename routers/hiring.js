@@ -5,12 +5,23 @@ const errorController = require("../controllers/errorController");
 
 router.post("/hiring", async (req, res, next) => {
   try {
-    const { position, description, location, lastDate } = await req.body;
+    const {
+      position,
+      description,
+      location,
+      lastDate,
+      experience,
+      eligibility,
+      techStack,
+    } = await req.body;
     const hiring_create = new Hiring({
       position,
       location,
       description,
       lastDate,
+      experience,
+      eligibility,
+      techStack,
     });
     const savehiring = await hiring_create.save();
     res.status(201).send(savehiring);
