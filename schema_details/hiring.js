@@ -21,6 +21,18 @@ const hiringSchema = new Schema({
     type: Date,
     required: [true, "Last Date is required"],
   },
+  experience: {
+    type: String,
+    required: [true, "Experience field is requires"],
+  },
+  eligibility: {
+    type: String,
+    required: [true, "Eligibility is required"],
+  },
+  techStack: {
+    type: String,
+    required: [true, "Tech stack is requires"],
+  },
 });
 
 const Hiring = new mongoose.model("Hiring", hiringSchema);
