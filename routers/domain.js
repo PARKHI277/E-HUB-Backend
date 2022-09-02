@@ -1,6 +1,7 @@
 const express = require("express");
 const router = new express.Router();
 const Domain = require("../schema_details/Domain");
+const errorController = require("../controllers/errorController");
 
 router.post("/domain", async (req, res) => {
   try {
@@ -23,17 +24,7 @@ router.post("/domain", async (req, res) => {
     const savedomain = await domain_create.save();
     res.status(201).send(savedomain);
   } catch (err) {
-    let message;
-    if (err.code === 11000) {
-      message = err.message;
-
-      console.log(message);
-    }
-    console.log(err);
-    return res.status(400).json({
-      success: false,
-      message: message,
-    });
+    errorController(err, req, res, next);
   }
 });
 

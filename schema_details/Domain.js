@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const domainSchema = new Schema({
   domain: {
     type: String,
-    required: true,
+    required: [true, "Domain Name is required"],
   },
 });
 

@@ -3,48 +3,49 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const UserSchema = new Schema({
-  userName: {
-    type: String,
-    required: [true, "username minimum length should be 3"],
-    minlength: 3,
-  },
-  institutionName: {
-    type: String,
-  },
-  branch: {
-    type: String,
-    required: [true, 'Branch field is required'],
-  },
-  email: {
-    type: String,
-    required: [true, "Email is required"],
-    unique: true,
-  },
-  mobile: {
-    type: String,
-    required: [true, 'mobile number is required'],
-    maxlength: [10, 'mobile number should have length of 10 only'],
-    minlength: [10, 'mobile number should have length of 10 only'],
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: [true, 'password is required'],
-  },
-  confirmPassword: {
-    type: String,
-    required: [true, 'Confirm password is required'],
-  },
-  isVerified: {
-    type: Boolean,
-    default: false,
-  },
-  otpuser: {
-    type: Number
-  },
-}
-//, {timestamps: true}
+const UserSchema = new Schema(
+  {
+    userName: {
+      type: String,
+      required: [true, "User Name minimum length should be 3"],
+      minlength: 3,
+    },
+    institutionName: {
+      type: String,
+    },
+    branch: {
+      type: String,
+      required: [true, "Branch field is required"],
+    },
+    email: {
+      type: String,
+      required: [true, "Email is required"],
+      unique: true,
+    },
+    mobile: {
+      type: String,
+      required: [true, "Mobile number is required"],
+      maxlength: [10, "Mobile number should have length of 10 only"],
+      minlength: [10, "Mobile number should have length of 10 only"],
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: [true, "Password is required"],
+    },
+    confirmPassword: {
+      type: String,
+      required: [true, "Confirm password is required"],
+    },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    otpuser: {
+      type: Number,
+    },
+  }
+  //, {timestamps: true}
 );
 //UserSchema.index({"otpuser":1},{expireAfterSeconds: 10});
 

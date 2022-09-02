@@ -3,6 +3,12 @@ const mongoose = require("mongoose");
 const validator=require('validator');
 const Schema = mongoose.Schema;
 const eventSchema = new Schema({
+  //eventId: {
+//   type:Number,
+//   unique:true,
+//   require:true, 
+//   default:0
+// },
   mentorName: {
     type: String,
     required: [true,'Enter a mentor name.']
@@ -13,18 +19,20 @@ const eventSchema = new Schema({
   },
   eventName: {
     type: String,
-    required: [true,'Enter a event name.']
+    required: [true,'Enter a event name.'],
+    unique:true
   },
   eventCode: {
-    type: String
+    type: String,
+    unique:true
   },
   description: {
     type: String,
     required: [true,'Enter a description.']
   },
-  dateTime: {
+  eventDate: {
     type: Date,
-    required: [true,'Enter a date and time.']
+    required: [true,'Enter date and time.']
   },
   position: {
     type: String,
@@ -34,7 +42,8 @@ const eventSchema = new Schema({
   },
   posterUrl: {
     type: String,
-    required: [true,'Enter poster url.']
+    required: [true,'Enter poster url.'],
+    unique:true
   },
 });
 

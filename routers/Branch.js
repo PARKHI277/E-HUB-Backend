@@ -1,9 +1,9 @@
 const express = require("express");
 const router = new express.Router();
 const Branch = require("../schema_details/Branch");
-
+const errorController = require("../controllers/errorController");
 // admin side
-router.post("/branch", async (req, res) => {
+router.post("/branch", async (req, res, next) => {
   try {
     const { branch } = await req.body;
     const branchExist = await Branch.findOne({ branch });
@@ -19,8 +19,7 @@ router.post("/branch", async (req, res) => {
     const savebranch = await branch_create.save();
     res.status(201).send(savebranch);
   } catch (err) {
-    console.log(err);
-    res.status(400).send(err);
+    errorController(err, req, res, next);
   }
 });
 
