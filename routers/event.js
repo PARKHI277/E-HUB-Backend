@@ -11,7 +11,7 @@ router.post("/event", async (req, res, next) => {
       eventName,
       eventCode,
       description,
-      dateTime,
+      eventDate,
       position,
       company,
       posterUrl,
@@ -21,7 +21,7 @@ router.post("/event", async (req, res, next) => {
       !mentorImage &&
       !eventName &&
       !description &&
-      !dateTime &&
+      !eventDate &&
       !posterUrl
     )
       return res.status(400).json({
@@ -34,7 +34,7 @@ router.post("/event", async (req, res, next) => {
       eventName,
       eventCode,
       description,
-      dateTime,
+      eventDate,
       position,
       company,
       posterUrl,
@@ -66,7 +66,7 @@ router.patch("/event/:id", async (req, res) => {
       !mentorImage ||
       !eventName ||
       !description ||
-      !dateTime ||
+      !eventDate ||
       !posterUrl
     )
       return res.status(400).json({
