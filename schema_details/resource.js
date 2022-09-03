@@ -5,9 +5,9 @@ const validate = require("validator");
 const Schema = mongoose.Schema;
 
 const ResourceSchema = new Schema({
-  resourceTitle: {
+  resourceName: {
     type: String,
-    required: true,
+    required: [true, "Resource Name is required"],
   },
   resourceLink: {
     type: String,
