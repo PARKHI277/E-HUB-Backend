@@ -40,4 +40,25 @@ router.get("/internship", async (req, res) => {
   }
 });
 
+router.delete("/internship/:id", async (req, res) => {
+  try {
+    const internship = await Internship.findByIdAndDelete(req.params.id);
+    if (!internship) {
+      return res.status(400).json({
+        success: false,
+        message: "This Internship id doesn't exixt",
+      });
+    } else {
+      return res.status(200).json({
+        success: true,
+        message: "Internship Details got deleted",
+      });
+    }
+  } catch (err) {
+    return res.status(400).json({
+      success: false,
+    });
+  }
+});
+
 module.exports = router;

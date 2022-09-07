@@ -23,7 +23,7 @@ const hiringSchema = new Schema({
   },
   experience: {
     type: String,
-    required: [true, "Experience field is requires"],
+    required: [true, "Experience field is required"],
   },
   eligibility: {
     type: String,
@@ -31,7 +31,7 @@ const hiringSchema = new Schema({
   },
   techStack: {
     type: String,
-    required: [true, "Tech stack is requires"],
+    required: [true, "Tech stack is required"],
   },
 });
 
