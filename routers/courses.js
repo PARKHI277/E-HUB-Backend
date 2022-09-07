@@ -24,6 +24,8 @@ router.post("/course", async (req, res, next) => {
       description,
       lastDate,
     });
+    // course_create.lastDate instanceof Date;
+    // course_create.validateSync().errors["lastDate"]; // CastError
 
     const savecourse = await course_create.save();
     res.status(201).send(savecourse);
@@ -44,6 +46,7 @@ router.get("/course", async (req, res, nexr) => {
     });
   }
 });
+
 router.patch("/course/:id", async (req, res) => {
   try {
     if (!courseName || !description || !lastDate)
@@ -69,6 +72,7 @@ router.patch("/course/:id", async (req, res) => {
       }
     );
   } catch (err) {
+    console.log(err);
     return res.status(400).json({
       success: false,
       message: "Enter fields",

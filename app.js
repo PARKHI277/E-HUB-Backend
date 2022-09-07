@@ -80,6 +80,7 @@ app.use("/api/v1", industryrouter);
 app.use("/api/v1", internshipRouter);
 app.use("/api/v1", handbookrouter);
 app.use("/api/v1", collegerouter);
+
 app.use("/api/v1", teamrouter);
 app.use("/api/v1", testimonialRouter);
 app.use("/api/v1", branchrouter);
