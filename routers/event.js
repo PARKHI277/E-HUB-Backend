@@ -28,6 +28,11 @@ router.post("/event", async (req, res, next) => {
         success: false,
         message: "Please fill all the fields",
       });
+  //  if(!eventDate.validateSync())
+  //  return res.status(400).json({
+  //   success: false,
+  //   message: "Enter a valid date",
+  // });
     const event_create = new Event({
       mentorName,
       mentorImage,
@@ -60,45 +65,66 @@ router.get("/event", async (req, res) => {
 });
 
 router.patch("/event/:id", async (req, res) => {
-  try {
+  try {const {
+    mentorName,
+    mentorImage,
+    eventName,
+    eventCode,
+    description,
+    eventDate,
+    position,
+    company,
+    posterUrl
+  } = await req.body;
     if (
-      !mentorName ||
-      !mentorImage ||
-      !eventName ||
-      !description ||
-      !eventDate ||
-      !posterUrl
+      !(   mentorName ||
+        mentorImage ||
+        eventName ||
+        eventCode ||
+        description ||
+        eventDate ||
+        position ||
+        company ||
+        posterUrl)
     )
       return res.status(400).json({
         success: false,
         message: "Please fill atleast one field.",
       });
-    //const id=JSON.parse(req.params.id);
-    //   const eventExist =Event.findOne({id });
-    // if (!eventExist) {
-    //   return res.status(400).send({ success:false,
-    //     message: "Id doesn't exists." });
-    // }
-    Event.findByIdAndUpdate(
-      req.params.id,
-      {
-        $set: req.body,
-      },
-      function (err, docs) {
-        if (err) {
+
+   Event.findById(req.params.id, function (err, docs) {
+      if (err){
           console.log(err);
-        } else {
-          res.status(200).json({
-            success: true,
-            message: "Event got updated",
-          });
-        }
       }
-    );
+      else{
+          if(docs==null)
+          return res.status(400).json({
+            success: false,
+            message: "Id does not exist",
+          });
+          Event.findByIdAndUpdate(
+            req.params.id,
+            {
+              $set: req.body,
+            },
+            function (err, docs) {
+              if (err) {
+                console.log(err);
+              } else {
+                res.status(200).json({
+                  success: true,
+                  message: "Event got updated",
+                });
+              }
+            }
+          );
+      }
+  });
+ 
   } catch (err) {
-    return res.status(400).json({
+    res.status(400).json({
       success: false,
-      message: "Enter fields",
+      message: "Enter fields"
     });
   }
 });
