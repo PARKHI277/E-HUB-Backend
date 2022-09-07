@@ -1,61 +1,50 @@
 const express = require("express");
 const router = new express.Router();
-const Event = require("../schema_details/event");
+const Testimonial = require("../schema_details/testimonial");
 const errorController = require("../controllers/errorController");
 
-router.post("/event", async (req, res, next) => {
+router.post("/testimonial", async (req, res, next) => {
   try {
-    const {
-      mentorName,
-      mentorImage,
-      eventName,
-      eventCode,
+    const {name,
+      profileImage,
       description,
-      eventDate,
-      position,
-      company,
-      posterUrl,
+      eventDate
     } = await req.body;
-    if (
-      !mentorName &&
-      !mentorImage &&
-      !eventName &&
-      !description &&
-      !eventDate &&
-      !posterUrl
-    )
-      return res.status(400).json({
-        success: false,
-        message: "Please fill all the fields",
-      });
+    // if (
+    //   !mentorName &&
+    //   !mentorImage &&
+    //   !eventName &&
+    //   !description &&
+    //   !eventDate &&
+    //   !posterUrl
+    // )
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "Please fill all the fields",
+    //   });
   //  if(!eventDate.validateSync())
   //  return res.status(400).json({
   //   success: false,
   //   message: "Enter a valid date",
   // });
-    const event_create = new Event({
-      mentorName,
-      mentorImage,
-      eventName,
-      eventCode,
-      description,
-      eventDate,
-      position,
-      company,
-      posterUrl,
+    const testimonial_create = new Testimonial({
+        name,
+        profileImage,
+        description,
+        eventDate
     });
-    const saveEvent = await event_create.save();
-    res.status(201).send(saveEvent);
+    const saveTestimonial = await testimonial_create.save();
+    res.status(201).send(saveTestimonial);
   } catch (err) {
     errorController(err, req, res, next);
   }
 });
 
-router.get("/event", async (req, res) => {
+router.get("/testimonial", async (req, res) => {
   try {
-    const allEvents = await Event.find();
+    const allTestimonials = await Testimonial.find();
 
-    res.status(200).send(allEvents);
+    res.status(200).send(allTestimonials);
   } catch (err) {
     return res.status(400).json({
       success: false,
@@ -64,35 +53,24 @@ router.get("/event", async (req, res) => {
   }
 });
 
-router.patch("/event/:id", async (req, res) => {
-  try {const {
-    mentorName,
-    mentorImage,
-    eventName,
-    eventCode,
+router.patch("/testimonial/:id", async (req, res) => {
+  try {const {name,
+    profileImage,
     description,
-    eventDate,
-    position,
-    company,
-    posterUrl
+    eventDate
   } = await req.body;
     if (
-      !(   mentorName ||
-        mentorImage ||
-        eventName ||
-        eventCode ||
-        description ||
-        eventDate ||
-        position ||
-        company ||
-        posterUrl)
+      !(  name||
+        profileImage||
+        description||
+        eventDate)
     )
       return res.status(400).json({
         success: false,
         message: "Please fill atleast one field.",
       });
 
-   Event.findById(req.params.id, function (err, docs) {
+  Testimonial.findById(req.params.id, function (err, docs) {
       if (err){
           console.log(err);
       }
@@ -102,7 +80,7 @@ router.patch("/event/:id", async (req, res) => {
             success: false,
             message: "Id does not exist",
           });
-          Event.findByIdAndUpdate(
+          Testimonial.findByIdAndUpdate(
             req.params.id,
             {
               $set: req.body,
@@ -113,7 +91,7 @@ router.patch("/event/:id", async (req, res) => {
               } else {
                 res.status(200).json({
                   success: true,
-                  message: "Event got updated",
+                  message: "Testimonial got updated",
                 });
               }
             }
@@ -129,18 +107,18 @@ router.patch("/event/:id", async (req, res) => {
   }
 });
 
-router.delete("/event/:id", async (req, res) => {
+router.delete("/testimonial/:id", async (req, res) => {
   try {
-    const event = await Event.findByIdAndDelete(req.params.id);
-    if (!event) {
+    const testimonial= await Testimonial.findByIdAndDelete(req.params.id);
+    if (!testimonial) {
       return res.status(400).json({
         success: false,
-        message: "This event id doesn't exist",
+        message: "This id doesn't exist",
       });
     } else {
       return res.status(200).json({
         success: true,
-        message: "Event Details got deleted",
+        message: "Testimonial details got deleted",
       });
     }
   } catch (err) {
