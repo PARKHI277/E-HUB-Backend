@@ -32,6 +32,7 @@ const eventSchema = new Schema({
   },
   eventDate: {
     type: Date,
+    min:2022-09-07,
     required: [true,'Enter date and time.']
   },
   position: {
