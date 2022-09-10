@@ -15,9 +15,9 @@ router.post("/campus", async (req, res, next) => {
       eventDate,
       price,
     } = await req.body;
-    const eventexixt = await Campus.findOne({ eventName });
+    const eventexist = await Campus.findOne({ eventName });
 
-    if (eventexixt) {
+    if (eventexist) {
       return res
         .status(200)
         .send({ message: "This Eventname already exists." });
@@ -100,7 +100,7 @@ router.delete("/campus/:id", async (req, res) => {
     if (!campus) {
       return res.status(400).json({
         success: false,
-        message: "This campus id doesn't exixt",
+        message: "This campus id doesn't exist",
       });
     } else {
       return res.status(200).json({

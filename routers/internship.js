@@ -6,11 +6,11 @@ const errorController = require("../controllers/errorController");
 router.post("/internship", async (req, res, next) => {
   try {
     const { internPosition, internCompany, internLink } = await req.body;
-    const internPexixt = await Internship.findOne({ internPosition });
-    const internCexixt = await Internship.findOne({ internCompany });
-    const internLexixt = await Internship.findOne({ internLink });
+    const internPexist = await Internship.findOne({ internPosition });
+    const internCexist = await Internship.findOne({ internCompany });
+    const internLexist = await Internship.findOne({ internLink });
 
-    if (internPexixt || internCexixt || internLexixt) {
+    if (internPexist && internCexist && internLexist) {
       return res
         .status(400)
         .send({ message: "This internship detail already exists." });
@@ -46,7 +46,7 @@ router.delete("/internship/:id", async (req, res) => {
     if (!internship) {
       return res.status(400).json({
         success: false,
-        message: "This Internship id doesn't exixt",
+        message: "This Internship id doesn't exist",
       });
     } else {
       return res.status(200).json({

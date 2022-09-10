@@ -19,7 +19,7 @@ const eventSchema = new Schema({
   },
   eventName: {
     type: String,
-    required: [true,'Enter a event name.'],
+    required: [true,'Enter an event name.'],
     unique:true
   },
   eventCode: {

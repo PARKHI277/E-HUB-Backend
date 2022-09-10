@@ -82,17 +82,14 @@ app.use("/api/v1", industryrouter);
 app.use("/api/v1", internshipRouter);
 app.use("/api/v1", handbookrouter);
 app.use("/api/v1", collegerouter);
-
 app.use("/api/v1", teamrouter);
 app.use("/api/v1", testimonialRouter);
 app.use("/api/v1", branchrouter);
 app.use("/api/v1", youtube);
 app.use("/api/v1", campusactivity);
 app.use("/api/v1", domainrouter);
-<<<<<<< HEAD
-=======
 app.use("/api/v1", courserouter);
->>>>>>> f1f45562be03fc4b4760cfb4a9da3ac5353f5d22
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`App is running on port ${PORT}`);
