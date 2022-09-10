@@ -5,17 +5,33 @@ const validate = require("validator");
 const Schema = mongoose.Schema;
 
 const hiringSchema = new Schema({
-  title: {
+  position: {
     type: String,
-    required: true,
+    required: [true, "Position field is required"],
+  },
+  location: {
+    type: String,
+    required: [true, "Location field is required"],
   },
   description: {
     type: String,
-    required: true,
+    required: [true, "Job Description is required"],
   },
-  Lastdate: {
+  lastDate: {
+    type: Date,
+    required: [true, "Last Date is required"],
+  },
+  experience: {
     type: String,
-    required: true,
+    required: [true, "Experience field is required"],
+  },
+  eligibility: {
+    type: String,
+    required: [true, "Eligibility is required"],
+  },
+  techStack: {
+    type: String,
+    required: [true, "Tech stack is required"],
   },
 });
 

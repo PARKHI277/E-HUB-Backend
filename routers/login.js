@@ -8,6 +8,7 @@ dotenv.config();
 const jwt = require("jsonwebtoken");
 let refreshTokens = [];
 const { sign, verify } = require("jsonwebtoken");
+const auth_verify=require("../middleware/auth");
 
 // --------- login the user ------------
 
@@ -25,6 +26,7 @@ router.post("/signin", async (req, res) => {
     let accessToken = jwt.sign({ user }, process.env.TOKEN_SECRET_KEY, {
       expiresIn: "1d",
     });
+
     let refreshToken = jwt.sign({ user }, process.env.REFRESH_TOKEN_SECRET, {
       expiresIn: "7d",
     });
@@ -44,7 +46,7 @@ router.post("/signin", async (req, res) => {
 });
 
 // Creates a new accessToken using the given refreshToken;
-router.post("/refresh", (req, res, next) => {
+router.post("/refresh",auth_verify, (req, res, next) => {
   const refreshToken = req.body.refreshToken;
   if (!refreshToken || !refreshTokens.includes(refreshToken)) {
     return res.json({ message: "Refresh token not found, login again" });
