@@ -2,6 +2,8 @@ const express = require("express");
 const router = new express.Router();
 const Campus = require("../schema_details/Campus");
 const errorController = require("../controllers/errorController");
+const date = require("../services/date");
+
 // admin side
 router.post("/campus", async (req, res, next) => {
   try {
@@ -15,6 +17,12 @@ router.post("/campus", async (req, res, next) => {
       eventDate,
       price,
     } = await req.body;
+    let validDate= date(eventDate);
+     if(!validDate)
+     return res.status(400).json({
+      success: false,
+      message: "Enter a valid date",
+      });
     const eventexist = await Campus.findOne({ eventName });
 
     if (eventexist) {

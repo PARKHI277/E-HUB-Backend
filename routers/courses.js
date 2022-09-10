@@ -2,6 +2,8 @@ const express = require("express");
 const router = new express.Router();
 const Course = require("../schema_details/courses");
 const errorController = require("../controllers/errorController");
+const date = require("../services/date");
+
 // admin side
 router.post("/course", async (req, res, next) => {
   try {
@@ -13,6 +15,12 @@ router.post("/course", async (req, res, next) => {
         message: "Please fill all the fields",
       });
     }
+    let validDate= date(lastDate);
+     if(!validDate)
+     return res.status(400).json({
+      success: false,
+      message: "Enter a valid date",
+      });
     const courseExist = await Course.findOne({ courseName });
 
     if (courseExist) {

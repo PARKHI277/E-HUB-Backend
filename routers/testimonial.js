@@ -2,6 +2,8 @@ const express = require("express");
 const router = new express.Router();
 const Testimonial = require("../schema_details/testimonial");
 const errorController = require("../controllers/errorController");
+const date = require("../services/date");
+
 
 router.post("/testimonial", async (req, res, next) => {
   try {
@@ -10,23 +12,12 @@ router.post("/testimonial", async (req, res, next) => {
       description,
       eventDate
     } = await req.body;
-    // if (
-    //   !mentorName &&
-    //   !mentorImage &&
-    //   !eventName &&
-    //   !description &&
-    //   !eventDate &&
-    //   !posterUrl
-    // )
-    //   return res.status(400).json({
-    //     success: false,
-    //     message: "Please fill all the fields",
-    //   });
-  //  if(!eventDate.validateSync())
-  //  return res.status(400).json({
-  //   success: false,
-  //   message: "Enter a valid date",
-  // });
+    let validDate= date(eventDate);
+     if(!validDate)
+     return res.status(400).json({
+      success: false,
+      message: "Enter a valid date",
+      });
     const testimonial_create = new Testimonial({
         name,
         profileImage,

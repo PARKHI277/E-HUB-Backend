@@ -2,6 +2,8 @@ const express = require("express");
 const router = new express.Router();
 const Event = require("../schema_details/event");
 const errorController = require("../controllers/errorController");
+const date = require("../services/date");
+
 
 router.post("/event", async (req, res, next) => {
   try {
@@ -28,11 +30,12 @@ router.post("/event", async (req, res, next) => {
         success: false,
         message: "Please fill all the fields",
       });
-  //  if(!eventDate.validateSync())
-  //  return res.status(400).json({
-  //   success: false,
-  //   message: "Enter a valid date",
-  // });
+    let validDate= date(eventDate);
+     if(!validDate)
+     return res.status(400).json({
+      success: false,
+      message: "Enter a valid date",
+      });
     const event_create = new Event({
       mentorName,
       mentorImage,
