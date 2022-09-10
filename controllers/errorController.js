@@ -16,7 +16,7 @@ const handleValidationError = (err, res) => {
     let fields = Object.values(err.errors).map(el => el.path);
     let code = 400;
 
-if(fields[0]=='eventDate' && errors[0].slice(0,12)==='Cast to date'){res.status(code).send({success:false,message: "Invalid date format" } );}
+if((fields[0]=='eventDate' ||fields[0]=='lastDate' ) && errors[0].slice(0,12)==='Cast to date'){res.status(code).send({success:false,message: "Invalid date format" } );}
    else{     res.status(code).send({success:false,message: errors[0] } );
     }}
 

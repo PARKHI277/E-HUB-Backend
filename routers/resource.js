@@ -6,9 +6,9 @@ const errorController = require("../controllers/errorController");
 router.post("/resource", async (req, res, next) => {
   try {
     const { resourceName, resourceLink } = await req.body;
-    const resourcenameexixt = await Resource.findOne({ resourceName });
-    const resourcelinkexixt = await Resource.findOne({ resourceLink });
-    if (resourcenameexixt || resourcelinkexixt) {
+    const resourcenameexist = await Resource.findOne({ resourceName });
+    const resourcelinkexist = await Resource.findOne({ resourceLink });
+    if (resourcenameexist && resourcelinkexist) {
       return res.status(400).send({ message: "This Resource already exists." });
     }
 
@@ -74,7 +74,7 @@ router.delete("/resource/:id", async (req, res) => {
     if (!resource) {
       return res.status(400).json({
         success: false,
-        message: "This resource id doesn't exixt",
+        message: "This resource id doesn't exist",
       });
     } else {
       return res.status(200).json({
