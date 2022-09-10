@@ -5,19 +5,20 @@ const Schema = mongoose.Schema;
 const HandbookSchema = new Schema({
   bookTitle: {
     type: String,
-    required: true,
+    required: [true, "Book Title is required"],
   },
   bookTagline: {
     type: String,
-    required: true,
+    required: [true, "Book Tagline is required"],
   },
   category: {
     type: String,
-    required: true,
+    required: [true, "Category is required"],
   },
-  pdfUrl: { type: String },
+  pdfUrl: { type: String, required: [true, "Pdf Url is required"] },
   bookimgUrl: {
     type: String,
+    required: [true, "BookimgUrl is required"],
   },
   imageUrl: { type: Array },
 });

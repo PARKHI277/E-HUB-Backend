@@ -230,7 +230,7 @@ router.patch("/signup/verify", async (req, res) => {
 
 router.get("/allusers", async (req, res) => {
   try {
-    const allusers = await User.find();
+    const allusers = await User.find().select("-password -confirmPassword -otpuser");
 
     res.status(200).send(allusers);
   } catch (err) {

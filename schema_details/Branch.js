@@ -7,7 +7,7 @@ const Schema = mongoose.Schema;
 const branchschema = new Schema({
   branch: {
     type: String,
-    required: true,
+    required: [true, "Enter Branch"],
   },
 });
 

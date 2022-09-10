@@ -20,9 +20,11 @@ const collegerouter = require("./routers/college");
 const teamrouter = require("./routers/team");
 const testimonialRouter=require("./routers/testimonial");
 const branchrouter = require("./routers/Branch");
+const courserouter = require("./routers/courses");
 const passport = require("passport");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
+
 const errorController = require('./controllers/errorController');
 const domainrouter = require("./routers/domain");
 
@@ -80,12 +82,17 @@ app.use("/api/v1", industryrouter);
 app.use("/api/v1", internshipRouter);
 app.use("/api/v1", handbookrouter);
 app.use("/api/v1", collegerouter);
+
 app.use("/api/v1", teamrouter);
 app.use("/api/v1", testimonialRouter);
 app.use("/api/v1", branchrouter);
 app.use("/api/v1", youtube);
 app.use("/api/v1", campusactivity);
 app.use("/api/v1", domainrouter);
+<<<<<<< HEAD
+=======
+app.use("/api/v1", courserouter);
+>>>>>>> f1f45562be03fc4b4760cfb4a9da3ac5353f5d22
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`App is running on port ${PORT}`);
