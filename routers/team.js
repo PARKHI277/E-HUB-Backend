@@ -24,7 +24,7 @@ router.post("/team", async (req, res, next) => {
 
 router.get("/team", async (req, res) => {
   try {
-    const allteams = await Team.find();
+    const allteams = await Team.find().sort({ "createdAt": -1 });
 
     res.status(200).send(allteams);
   } catch (err) {

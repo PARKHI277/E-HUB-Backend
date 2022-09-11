@@ -30,7 +30,7 @@ router.post("/domain", async (req, res) => {
 
 router.get("/domain", async (req, res) => {
   try {
-    const alldomains = await Domain.find();
+    const alldomains = await Domain.find().sort({ "createdAt": -1 });
     // var coll_arr = [];
     domainarray = alldomains.map((alldomain) => alldomain.domain);
 

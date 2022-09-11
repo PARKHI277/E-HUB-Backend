@@ -20,7 +20,7 @@ const MentorSchema = new Schema({
     maxLength: 10,
     minLength: 10,
   },
-});
+},{ timestamps: true });
 
 const Mentor = new mongoose.model("Domain", MentorSchema);
 module.exports = Mentor;

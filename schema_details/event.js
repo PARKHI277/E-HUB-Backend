@@ -35,7 +35,10 @@ const eventSchema = new Schema({
     required: [true,'Enter date and time.']
   },
   position: {
-    type: String,
+    type: String
+  },
+  tagline: {
+    type: String
   },
   company: {
     type: String,
@@ -44,8 +47,8 @@ const eventSchema = new Schema({
     type: String,
     required: [true,'Enter poster url.'],
     unique:true
-  },
-});
+  }
+},  { timestamps: true });
 
 const Event = new mongoose.model("Event", eventSchema);
 module.exports = Event;

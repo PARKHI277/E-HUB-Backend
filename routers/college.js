@@ -26,7 +26,7 @@ router.post("/college", async (req, res, next) => {
 // user side
 router.get("/college", async (req, res) => {
   try {
-    const allcolleges = await College.find();
+    const allcolleges = await College.find().sort({ "createdAt": -1 });
     // var coll_arr = [];
     collegearray = allcolleges.map((allcollege) => allcollege.collegeName);
 

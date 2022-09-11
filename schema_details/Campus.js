@@ -34,7 +34,7 @@ const campusSchema = new Schema({
   price: {
     type: String,
   },
-});
+},{ timestamps: true });
 
 const campusName = new mongoose.model("campus", campusSchema);
 module.exports = campusName;

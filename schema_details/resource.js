@@ -13,7 +13,7 @@ const ResourceSchema = new Schema({
     type: String,
     required: [true, "Resource link is required."],
   },
-});
+},{ timestamps: true });
 
 const Resource = new mongoose.model("Resource", ResourceSchema);
 module.exports = Resource;

@@ -20,8 +20,8 @@ const HandbookSchema = new Schema({
     type: String,
     required: [true, "Booking Url is required"],
   },
-  imageUrl: { type: Array },
-});
+  imageUrl: { type: Array }
+},{ timestamps: true });
 
 const Handbook = new mongoose.model("Handbook", HandbookSchema);
 module.exports = Handbook;

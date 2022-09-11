@@ -32,7 +32,7 @@ router.post("/internship", async (req, res, next) => {
 
 router.get("/internship", async (req, res) => {
   try {
-    const allinternship = await Internship.find();
+    const allinternship = await Internship.find().sort({ "createdAt": -1 });
 
     res.status(200).send(allinternship);
   } catch (err) {

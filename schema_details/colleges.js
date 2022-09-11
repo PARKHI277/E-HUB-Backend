@@ -9,7 +9,7 @@ const collegeschema = new Schema({
     type: String,
     required: [true, "College Name is required"],
   },
-});
+},{ timestamps: true });
 
 const Collegename = new mongoose.model("college", collegeschema);
 module.exports = Collegename;

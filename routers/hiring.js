@@ -39,7 +39,7 @@ router.post("/hiring", async (req, res, next) => {
 
 router.get("/hiring", async (req, res) => {
   try {
-    const hiringdetail = await Hiring.find();
+    const hiringdetail = await Hiring.find().sort({ "createdAt": -1 });
 
     res.status(200).send(hiringdetail);
   } catch (err) {

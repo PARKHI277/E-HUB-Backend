@@ -19,7 +19,7 @@ router.post("/Mentor", async (req, res, next) => {
 });
 router.get("/mentor", async (req, res) => {
   try {
-    const allmentors = await Mentor.find();
+    const allmentors = await Mentor.find().sort({ "createdAt": -1 });
 
     res.status(200).send(allmentors);
   } catch (err) {

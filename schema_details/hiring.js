@@ -33,7 +33,7 @@ const hiringSchema = new Schema({
     type: String,
     required: [true, "Tech stack is required"],
   },
-});
+},{ timestamps: true });
 
 const Hiring = new mongoose.model("Hiring", hiringSchema);
 module.exports = Hiring;

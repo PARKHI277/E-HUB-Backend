@@ -21,7 +21,7 @@ const industrySchema = new Schema({
     type: Number,
     required: true,
   },
-});
+},{ timestamps: true });
 
 const industry = new mongoose.model("industry", industrySchema);
 module.exports = industry;

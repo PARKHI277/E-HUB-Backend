@@ -17,6 +17,7 @@ router.post("/event", async (req, res, next) => {
       position,
       company,
       posterUrl,
+      tagline
     } = await req.body;
     if (
       !mentorName &&
@@ -46,6 +47,7 @@ router.post("/event", async (req, res, next) => {
       position,
       company,
       posterUrl,
+      tagline
     });
     const saveEvent = await event_create.save();
     res.status(201).send(saveEvent);
@@ -56,7 +58,7 @@ router.post("/event", async (req, res, next) => {
 
 router.get("/event", async (req, res) => {
   try {
-    const allEvents = await Event.find();
+    const allEvents = await Event.find().sort({ "createdAt": -1 });
 
     res.status(200).send(allEvents);
   } catch (err) {
@@ -77,7 +79,8 @@ router.patch("/event/:id", async (req, res) => {
     eventDate,
     position,
     company,
-    posterUrl
+    posterUrl,
+    tagline
   } = await req.body;
     if (
       !(   mentorName ||
