@@ -16,13 +16,14 @@ router.post("/campus", async (req, res, next) => {
       eventType,
       eventDate,
       price,
+      websiteUrl,
     } = await req.body;
-    let validDate= date(eventDate);
-     if(!validDate)
-     return res.status(400).json({
-      success: false,
-      message: "Enter a valid date",
-      });
+    // let validDate = date(eventDate);
+    // if (!validDate)
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "Enter a valid date",
+    // });
     const eventexist = await Campus.findOne({ eventName });
 
     if (eventexist) {
@@ -40,6 +41,7 @@ router.post("/campus", async (req, res, next) => {
       eventType,
       eventDate,
       price,
+      websiteUrl,
     });
 
     const saveCampus = await campus_create.save();
@@ -52,7 +54,10 @@ router.post("/campus", async (req, res, next) => {
 // user side
 router.get("/campus", async (req, res) => {
   try {
-    const allcampus = await Campus.find().sort({ "createdAt": -1 });
+    let currentDate = new Date().toISOString();
+    const allcampus = await Campus.find({
+      eventDate: { $gte: currentDate },
+    }).sort({ createdAt: -1 });
 
     res.status(200).send(allcampus);
   } catch (err) {
