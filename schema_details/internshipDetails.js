@@ -14,7 +14,7 @@ const internshipSchema = new mongoose.Schema({
     type: String,
     required: [true, "Intern Link is required"],
   },
-});
+},{ timestamps: true });
 
 const Internship = new mongoose.model("Internship", internshipSchema);
 module.exports = Internship;

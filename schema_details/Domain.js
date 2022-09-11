@@ -8,7 +8,7 @@ const domainSchema = new Schema({
     type: String,
     required: [true, "Domain Name is required"],
   },
-});
+},{ timestamps: true });
 
 const domainName = new mongoose.model("domain", domainSchema);
 module.exports = domainName;

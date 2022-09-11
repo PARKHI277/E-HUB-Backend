@@ -31,7 +31,7 @@ router.post("/handbook", async (req, res, next) => {
 
 router.get("/handbook", async (req, res) => {
   try {
-    const allhandbooks = await Handbook.find();
+    const allhandbooks = await Handbook.find().sort({ "createdAt": -1 });
 
     res.status(200).send(allhandbooks);
   } catch (err) {

@@ -1,7 +1,6 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
 const validate = require("validator");
-
 const Schema = mongoose.Schema;
 
 const youtubeSchema = new Schema({
@@ -26,7 +25,7 @@ const youtubeSchema = new Schema({
   channelTitle: {
     type: String,
   },
-});
+},{ timestamps: true });
 
 const youtubeName = new mongoose.model("youtube", youtubeSchema);
 module.exports = youtubeName;

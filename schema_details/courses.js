@@ -16,8 +16,8 @@ const courseschema = new Schema({
   lastDate: {
     type: Date,
     required: [true, "Please enter Last Date"],
-  },
-});
+  }
+},{ timestamps: true });
 
 const course = new mongoose.model("course", courseschema);
 module.exports = course;

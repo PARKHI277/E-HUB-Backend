@@ -61,7 +61,7 @@ router.post("/youtubeapi/:videoId", async (req, res) => {
 
 router.get("/youtubeapi", async (req, res) => {
   try {
-    const allids = await Youtube.find();
+    const allids = await Youtube.find().sort({ "createdAt": -1 });
 
     res.status(200).send(allids);
   } catch (err) {

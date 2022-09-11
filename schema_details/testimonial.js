@@ -20,7 +20,7 @@ const testimonialSchema = new Schema({
     type: Date,
     required: [true,'Enter date and time.']
   }
-});
+},{ timestamps: true });
 
 const Testimonial = new mongoose.model("Testimonial",testimonialSchema);
 module.exports =Testimonial;
