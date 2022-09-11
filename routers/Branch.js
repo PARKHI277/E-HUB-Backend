@@ -26,7 +26,7 @@ router.post("/branch", async (req, res, next) => {
 // user side
 router.get("/branch", async (req, res) => {
   try {
-    const allbranches = await Branch.find();
+    const allbranches = await Branch.find().sort({ "createdAt": -1 });
 
     branchearray = allbranches.map((allbranch) => allbranch.branch);
 

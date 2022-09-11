@@ -33,7 +33,7 @@ router.post("/testimonial", async (req, res, next) => {
 
 router.get("/testimonial", async (req, res) => {
   try {
-    const allTestimonials = await Testimonial.find();
+    const allTestimonials = await Testimonial.find().sort({ "createdAt": -1 });
 
     res.status(200).send(allTestimonials);
   } catch (err) {

@@ -44,7 +44,7 @@ router.post("/course", async (req, res, next) => {
 
 router.get("/course", async (req, res, nexr) => {
   try {
-    const allCourses = await Course.find();
+    const allCourses = await Course.find().sort({ "createdAt": -1 });
 
     res.status(200).send(allCourses);
   } catch (err) {

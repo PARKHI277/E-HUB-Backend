@@ -15,7 +15,7 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-});
+},{ timestamps: true });
 
 const GoogleUser = new mongoose.model("GoogleUser", UserSchema);
 module.exports = GoogleUser;

@@ -163,8 +163,7 @@ router.post("/signup", async (req, res) => {
 //taking otp and updating isVerified in db
 
 router.patch("/signup/verify", async (req, res) => {
-  try {
-    const accessToken = req.body.accessToken;
+  try {    const accessToken = req.body.accessToken;
     const otp = req.body.otp;
     if (!accessToken && !otp)
       return res.status(400).json({
@@ -218,6 +217,8 @@ router.patch("/signup/verify", async (req, res) => {
         message: "Invalid OTP.",
       });
     }
+    
+   
   } catch (err) {
     res.status(400).json({
       success: false,
@@ -230,7 +231,7 @@ router.patch("/signup/verify", async (req, res) => {
 
 router.get("/allusers", async (req, res) => {
   try {
-    const allusers = await User.find().select("-password -confirmPassword -otpuser");
+    const allusers = await User.find().select("-password -confirmPassword -otpuser").sort({ "createdAt": -1 });
 
     res.status(200).send(allusers);
   } catch (err) {
@@ -252,5 +253,90 @@ router.get(
     res.redirect("/");
   }
 );
+
+router.get("/user", async (req, res) => {
+  try {const accessToken = req.body.accessToken;
+    if (!accessToken)
+      return res.status(400).json({
+        success: false,
+        message: "Send access token",
+      });
+    const dec = accessToken.split(".")[1];
+    //console.log(dec);
+    if (!dec) {
+      return res.status(400).json({
+        success: false,
+        message: "Send access token in proper format.",
+      });
+    }
+    const decode = JSON.parse(atob(dec));
+    //console.log(decode);
+    if (!decode) {
+      return res.status(400).json({
+        success: false,
+        message: "Send access token in proper format.",
+      });
+    }
+     User.findById(decode.user_create, function (err, docs) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.status(200).json({
+          success: true,
+          message: docs
+        });}});
+
+  } catch (err) {
+    res.status(400).json({
+      success: false,
+      message: err,
+    });
+  }
+});
+
+router.patch("/user", async (req, res) => {
+  try {const accessToken = req.body.accessToken;
+    if (!accessToken)
+      return res.status(400).json({
+        success: false,
+        message: "Send access token",
+      });
+    const dec = accessToken.split(".")[1];
+    //console.log(dec);
+    if (!dec) {
+      return res.status(400).json({
+        success: false,
+        message: "Send access token in proper format.",
+      });
+    }
+    const decode = JSON.parse(atob(dec));
+    //console.log(decode);
+    if (!decode) {
+      return res.status(400).json({
+        success: false,
+        message: "Send access token in proper format.",
+      });
+    }
+    User.findByIdAndUpdate(
+      decode.user_create,
+      {
+        $set: req.body,
+      },
+      function (err, docs) {
+        if (err) {
+          console.log(err);
+        } else {
+          res.status(200).json({
+            success: true,
+            message: "User details got updated",
+          });
+
+  }});} catch (err) {
+    res.status(400).json({
+      success: false,
+      message: err,
+    });
+  }
+});
 
 module.exports = router;

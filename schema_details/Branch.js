@@ -8,8 +8,8 @@ const branchschema = new Schema({
   branch: {
     type: String,
     required: [true, "Enter Branch"],
-  },
-});
+  }
+},{ timestamps: true });
 
 const branchname = new mongoose.model("branch", branchschema);
 module.exports = branchname;

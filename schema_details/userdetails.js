@@ -45,7 +45,7 @@ const UserSchema = new Schema(
       type: Number,
     },
   }
-  //, {timestamps: true}
+  , {timestamps: true}
 );
 //UserSchema.index({"otpuser":1},{expireAfterSeconds: 10});
 

@@ -52,7 +52,7 @@ router.post("/campus", async (req, res, next) => {
 // user side
 router.get("/campus", async (req, res) => {
   try {
-    const allcampus = await Campus.find();
+    const allcampus = await Campus.find().sort({ "createdAt": -1 });
 
     res.status(200).send(allcampus);
   } catch (err) {
