@@ -250,6 +250,7 @@ router.get("/allusers", async (req, res) => {
     res.status(500).send(err);
   }
 });
+
 // Google - auth route
 // for sigin
 router.get(
@@ -259,10 +260,9 @@ router.get(
 router.get(
   "/auth/google/callback",
   passport.authenticate("google", { failureRedirect: "/login" }),
-  function (req, res) {
-    // Successful authentication, redirect home.
-
-    res.redirect("/");
+  (req, res, next) => {
+    console.log(req.user);
+    res.send("user is logged in");
   }
 );
 
