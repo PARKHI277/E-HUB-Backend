@@ -158,49 +158,48 @@ router.delete("/event/:id", async (req, res) => {
 
 // updating event code
 
-// router.patch("/eventcode/:id", async (req, res) => {
-//   try {
-//     const eventcode = req.body.eventCode;
-//     if (!eventcode) {
-//       res.status(400).json({
-//         success: false,
-//         message: "Please add event Code to update",
-//       });
-//     }
-
-//     Event.findById(req.params.id, function (err, docs) {
-//       if (err) {
-//         console.log(err);
-//       }
-//       else {
-//         if (docs == null)
-//           return res.status(400).json({
-//             success: false,
-//             message: "Id does not exist",
-//           });
-//         Event.findByIdAndUpdate(
-//           req.params.id,
-//           {
-//             $set: req.body,
-//           },
-//           function (err, docs) {
-//             if (err) {
-//               console.log(err);
-//             } else {
-//               res.status(200).json({
-//                 success: true,
-//                 message: "Event got updated",
-//               });
-//             }
-//           }
-//         );
-//       }
-
-//     }catch (err) {
-//       res.status(400).json({
-//         success: false,
-//         message: "Enter fields",
-//       });
-//     });
+router.patch("/eventcode/:id", async (req, res) => {
+  try {
+    const eventcode = req.body.eventCode;
+    if (!eventcode) {
+      res.status(400).json({
+        success: false,
+        message: "Please add event Code to update",
+      });
+    }
+    Event.findById(req.params.id, function (err, docs) {
+      if (err) {
+        console.log(err);
+      } else {
+        if (docs == null)
+          return res.status(400).json({
+            success: false,
+            message: "Id does not exist",
+          });
+        Event.findByIdAndUpdate(
+          req.params.id,
+          {
+            $set: req.body,
+          },
+          function (err, docs) {
+            if (err) {
+              console.log(err);
+            } else {
+              res.status(200).json({
+                success: true,
+                message: "Event got updated",
+              });
+            }
+          }
+        );
+      }
+    });
+  } catch (err) {
+    res.status(400).json({
+      success: false,
+      message: "Enter fields",
+    });
+  }
+});
 
 module.exports = router;
