@@ -1,6 +1,6 @@
 const express = require("express");
 const router = new express.Router();
-const Mentor = require("../schema_details/mentor");
+const Mentor = require("../models/mentor");
 
 router.post("/Mentor", async (req, res, next) => {
   try {
@@ -19,7 +19,7 @@ router.post("/Mentor", async (req, res, next) => {
 });
 router.get("/mentor", async (req, res) => {
   try {
-    const allmentors = await Mentor.find().sort({ "createdAt": -1 });
+    const allmentors = await Mentor.find().sort({ createdAt: -1 });
 
     res.status(200).send(allmentors);
   } catch (err) {

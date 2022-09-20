@@ -1,6 +1,6 @@
 const express = require("express");
 const router = new express.Router();
-const Campus = require("../schema_details/Campus");
+const Campus = require("../models/Campus");
 const errorController = require("../controllers/errorController");
 const date = require("../services/date");
 

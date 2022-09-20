@@ -1,6 +1,6 @@
 const express = require("express");
 const router = new express.Router();
-const College = require("../schema_details/colleges");
+const College = require("../models/colleges");
 const errorController = require("../controllers/errorController");
 // admin side
 router.post("/college", async (req, res, next) => {
@@ -26,7 +26,7 @@ router.post("/college", async (req, res, next) => {
 // user side
 router.get("/college", async (req, res) => {
   try {
-    const allcolleges = await College.find().sort({ "createdAt": -1 });
+    const allcolleges = await College.find().sort({ createdAt: -1 });
     // var coll_arr = [];
     collegearray = allcolleges.map((allcollege) => allcollege.collegeName);
 

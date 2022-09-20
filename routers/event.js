@@ -1,9 +1,8 @@
 const express = require("express");
 const router = new express.Router();
-const Event = require("../schema_details/event");
+const Event = require("../models/event");
 const errorController = require("../controllers/errorController");
 const date = require("../services/date");
-
 
 router.post("/event", async (req, res, next) => {
   try {
@@ -17,7 +16,7 @@ router.post("/event", async (req, res, next) => {
       position,
       company,
       posterUrl,
-      tagline
+      tagline,
     } = await req.body;
     if (
       !mentorName &&
@@ -31,11 +30,11 @@ router.post("/event", async (req, res, next) => {
         success: false,
         message: "Please fill all the fields",
       });
-    let validDate= date(eventDate);
-     if(!validDate)
-     return res.status(400).json({
-      success: false,
-      message: "Enter a valid date",
+    let validDate = date(eventDate);
+    if (!validDate)
+      return res.status(400).json({
+        success: false,
+        message: "Enter a valid date",
       });
     const event_create = new Event({
       mentorName,
@@ -47,7 +46,7 @@ router.post("/event", async (req, res, next) => {
       position,
       company,
       posterUrl,
-      tagline
+      tagline,
     });
     const saveEvent = await event_create.save();
     res.status(201).send(saveEvent);
@@ -58,7 +57,7 @@ router.post("/event", async (req, res, next) => {
 
 router.get("/event", async (req, res) => {
   try {
-    const allEvents = await Event.find().sort({ "createdAt": -1 });
+    const allEvents = await Event.find().sort({ createdAt: -1 });
 
     res.status(200).send(allEvents);
   } catch (err) {
@@ -70,20 +69,22 @@ router.get("/event", async (req, res) => {
 });
 
 router.patch("/event/:id", async (req, res) => {
-  try {const {
-    mentorName,
-    mentorImage,
-    eventName,
-    eventCode,
-    description,
-    eventDate,
-    position,
-    company,
-    posterUrl,
-    tagline
-  } = await req.body;
+  try {
+    const {
+      mentorName,
+      mentorImage,
+      eventName,
+      eventCode,
+      description,
+      eventDate,
+      position,
+      company,
+      posterUrl,
+      tagline,
+    } = await req.body;
     if (
-      !(   mentorName ||
+      !(
+        mentorName ||
         mentorImage ||
         eventName ||
         eventCode ||
@@ -91,46 +92,45 @@ router.patch("/event/:id", async (req, res) => {
         eventDate ||
         position ||
         company ||
-        posterUrl)
+        posterUrl
+      )
     )
       return res.status(400).json({
         success: false,
         message: "Please fill atleast one field.",
       });
 
-   Event.findById(req.params.id, function (err, docs) {
-      if (err){
-          console.log(err);
-      }
-      else{
-          if(docs==null)
+    Event.findById(req.params.id, function (err, docs) {
+      if (err) {
+        console.log(err);
+      } else {
+        if (docs == null)
           return res.status(400).json({
             success: false,
             message: "Id does not exist",
           });
-          Event.findByIdAndUpdate(
-            req.params.id,
-            {
-              $set: req.body,
-            },
-            function (err, docs) {
-              if (err) {
-                console.log(err);
-              } else {
-                res.status(200).json({
-                  success: true,
-                  message: "Event got updated",
-                });
-              }
+        Event.findByIdAndUpdate(
+          req.params.id,
+          {
+            $set: req.body,
+          },
+          function (err, docs) {
+            if (err) {
+              console.log(err);
+            } else {
+              res.status(200).json({
+                success: true,
+                message: "Event got updated",
+              });
             }
-          );
+          }
+        );
       }
-  });
- 
+    });
   } catch (err) {
     res.status(400).json({
       success: false,
-      message: "Enter fields"
+      message: "Enter fields",
     });
   }
 });

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = new express.Router();
-const Internship = require("../schema_details/internshipDetails");
+const Internship = require("../models/internshipDetails");
 const errorController = require("../controllers/errorController");
 
 router.post("/internship", async (req, res, next) => {
@@ -32,7 +32,7 @@ router.post("/internship", async (req, res, next) => {
 
 router.get("/internship", async (req, res) => {
   try {
-    const allinternship = await Internship.find().sort({ "createdAt": -1 });
+    const allinternship = await Internship.find().sort({ createdAt: -1 });
 
     res.status(200).send(allinternship);
   } catch (err) {

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = new express.Router();
-const Team = require("../schema_details/team");
+const Team = require("../models/team");
 
 // admin
 router.post("/team", async (req, res, next) => {
@@ -24,7 +24,7 @@ router.post("/team", async (req, res, next) => {
 
 router.get("/team", async (req, res) => {
   try {
-    const allteams = await Team.find().sort({ "createdAt": -1 });
+    const allteams = await Team.find().sort({ createdAt: -1 });
 
     res.status(200).send(allteams);
   } catch (err) {

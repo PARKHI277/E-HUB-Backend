@@ -1,6 +1,6 @@
 const express = require("express");
 const router = new express.Router();
-const Resource = require("../schema_details/resource");
+const Resource = require("../models/resource");
 const errorController = require("../controllers/errorController");
 
 router.post("/resource", async (req, res, next) => {
@@ -27,7 +27,7 @@ router.post("/resource", async (req, res, next) => {
 
 router.get("/resource", async (req, res) => {
   try {
-    const allresource = await Resource.find().sort({ "createdAt": -1 });
+    const allresource = await Resource.find().sort({ createdAt: -1 });
 
     res.status(200).send(allresource);
   } catch (err) {

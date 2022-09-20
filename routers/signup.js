@@ -1,6 +1,6 @@
 const express = require("express");
 const router = new express.Router();
-const User = require("../schema_details/userdetails");
+const User = require("../models/userdetails");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const passport = require("passport");
@@ -10,7 +10,6 @@ dotenv.config();
 const atob = require("atob");
 
 const emailer = require("../services/email");
-
 
 // user signup
 router.post("/signup", async (req, res) => {
@@ -92,20 +91,23 @@ router.post("/signup", async (req, res) => {
             expiresIn: "2d",
           }
         );
-        emailer(email, otp);  //otp sent to the user
+        emailer(email, otp); //otp sent to the user
 
         user_create
           .save()
           .then(() => {
             setTimeout(() => {
-              User.findByIdAndUpdate(user_create._id, { $set: { otpuser: null } }, function (err, docs) {
-                if (err) {
-                  console.log(err)
+              User.findByIdAndUpdate(
+                user_create._id,
+                { $set: { otpuser: null } },
+                function (err, docs) {
+                  if (err) {
+                    console.log(err);
+                  } else {
+                    console.log("Updated User : ", docs);
+                  }
                 }
-                else {
-                  console.log("Updated User : ", docs);
-                }
-              });
+              );
             }, 300000);
             res.status(201).send({
               message: "Registration successfull and OTP sent",
@@ -118,26 +120,36 @@ router.post("/signup", async (req, res) => {
               refreshToken: `${refreshToken}`,
             });
           })
-          .catch((err) => {let message;
+          .catch((err) => {
+            let message;
             if (err.code === 11000) {
               // message = err.message;
               message = "Mobile number already exists";
               console.log(message);
             }
             if (err.name === "ValidationError") {
-              if(err.message=='User validation failed: email: Email is required')
-              message ="Email is required";
-               if(err.message=='User validation failed: userName: username minimum length should be 3')
-              message ="Username is required";
-               if(err.message=='User validation failed: mobile: mobile number is required')
-              message ="Mobile number is required";
+              if (
+                err.message ==
+                "User validation failed: email: Email is required"
+              )
+                message = "Email is required";
+              if (
+                err.message ==
+                "User validation failed: userName: username minimum length should be 3"
+              )
+                message = "Username is required";
+              if (
+                err.message ==
+                "User validation failed: mobile: mobile number is required"
+              )
+                message = "Mobile number is required";
               //message=err.message;
-           }
+            }
             if (err.name === "CastError") message = err.message;
             if (err.name === "EmptyError") message = err.message;
             return res.status(400).json({
               success: false,
-              message: message
+              message: message,
             });
             // console.log(err.message);
             //  res.status(400).send(err.message);
@@ -153,7 +165,6 @@ router.post("/signup", async (req, res) => {
           "Password should be longer than 8 characters and it has to include at least one number,one uppercase letter , one special charcter and one lowercase , Password should start from uppercase Letter",
       });
       //
-
     }
   } catch (err) {
     return res.status(400).send({ message: "Something went wrong" });
@@ -163,7 +174,8 @@ router.post("/signup", async (req, res) => {
 //taking otp and updating isVerified in db
 
 router.patch("/signup/verify", async (req, res) => {
-  try {    const accessToken = req.body.accessToken;
+  try {
+    const accessToken = req.body.accessToken;
     const otp = req.body.otp;
     if (!accessToken && !otp)
       return res.status(400).json({
@@ -217,8 +229,6 @@ router.patch("/signup/verify", async (req, res) => {
         message: "Invalid OTP.",
       });
     }
-    
-   
   } catch (err) {
     res.status(400).json({
       success: false,
@@ -231,7 +241,9 @@ router.patch("/signup/verify", async (req, res) => {
 
 router.get("/allusers", async (req, res) => {
   try {
-    const allusers = await User.find().select("-password -confirmPassword -otpuser").sort({ "createdAt": -1 });
+    const allusers = await User.find()
+      .select("-password -confirmPassword -otpuser")
+      .sort({ createdAt: -1 });
 
     res.status(200).send(allusers);
   } catch (err) {
@@ -255,7 +267,8 @@ router.get(
 );
 
 router.get("/user", async (req, res) => {
-  try {const accessToken = req.body.accessToken;
+  try {
+    const accessToken = req.body.accessToken;
     if (!accessToken)
       return res.status(400).json({
         success: false,
@@ -277,15 +290,16 @@ router.get("/user", async (req, res) => {
         message: "Send access token in proper format.",
       });
     }
-     User.findById(decode.user_create, function (err, docs) {
+    User.findById(decode.user_create, function (err, docs) {
       if (err) {
         console.log(err);
       } else {
         res.status(200).json({
           success: true,
-          message: docs
-        });}});
-
+          message: docs,
+        });
+      }
+    });
   } catch (err) {
     res.status(400).json({
       success: false,
@@ -295,7 +309,8 @@ router.get("/user", async (req, res) => {
 });
 
 router.patch("/user", async (req, res) => {
-  try {const accessToken = req.body.accessToken;
+  try {
+    const accessToken = req.body.accessToken;
     if (!accessToken)
       return res.status(400).json({
         success: false,
@@ -330,8 +345,10 @@ router.patch("/user", async (req, res) => {
             success: true,
             message: "User details got updated",
           });
-
-  }});} catch (err) {
+        }
+      }
+    );
+  } catch (err) {
     res.status(400).json({
       success: false,
       message: err,

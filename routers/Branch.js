@@ -1,6 +1,6 @@
 const express = require("express");
 const router = new express.Router();
-const Branch = require("../schema_details/Branch");
+const Branch = require("../models/Branch");
 const errorController = require("../controllers/errorController");
 // admin side
 router.post("/branch", async (req, res, next) => {
@@ -26,7 +26,7 @@ router.post("/branch", async (req, res, next) => {
 // user side
 router.get("/branch", async (req, res) => {
   try {
-    const allbranches = await Branch.find().sort({ "createdAt": -1 });
+    const allbranches = await Branch.find().sort({ createdAt: -1 });
 
     branchearray = allbranches.map((allbranch) => allbranch.branch);
 

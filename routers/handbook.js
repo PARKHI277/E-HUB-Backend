@@ -1,6 +1,6 @@
 const express = require("express");
 const router = new express.Router();
-const Handbook = require("../schema_details/handbook");
+const Handbook = require("../models/handbook");
 const errorController = require("../controllers/errorController");
 
 router.post("/handbook", async (req, res, next) => {
@@ -31,7 +31,7 @@ router.post("/handbook", async (req, res, next) => {
 
 router.get("/handbook", async (req, res) => {
   try {
-    const allhandbooks = await Handbook.find().sort({ "createdAt": -1 });
+    const allhandbooks = await Handbook.find().sort({ createdAt: -1 });
 
     res.status(200).send(allhandbooks);
   } catch (err) {

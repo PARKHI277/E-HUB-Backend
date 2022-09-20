@@ -1,6 +1,6 @@
 const express = require("express");
 const router = new express.Router();
-const industry = require("../schema_details/industrypersonality");
+const industry = require("../models/industrypersonality");
 
 router.post("/industry", async (req, res, next) => {
   try {

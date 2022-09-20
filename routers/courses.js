@@ -1,6 +1,6 @@
 const express = require("express");
 const router = new express.Router();
-const Course = require("../schema_details/courses");
+const Course = require("../models/courses");
 const errorController = require("../controllers/errorController");
 const date = require("../services/date");
 
@@ -15,11 +15,11 @@ router.post("/course", async (req, res, next) => {
         message: "Please fill all the fields",
       });
     }
-    let validDate= date(lastDate);
-     if(!validDate)
-     return res.status(400).json({
-      success: false,
-      message: "Enter a valid date",
+    let validDate = date(lastDate);
+    if (!validDate)
+      return res.status(400).json({
+        success: false,
+        message: "Enter a valid date",
       });
     const courseExist = await Course.findOne({ courseName });
 
@@ -44,7 +44,7 @@ router.post("/course", async (req, res, next) => {
 
 router.get("/course", async (req, res, nexr) => {
   try {
-    const allCourses = await Course.find().sort({ "createdAt": -1 });
+    const allCourses = await Course.find().sort({ createdAt: -1 });
 
     res.status(200).send(allCourses);
   } catch (err) {

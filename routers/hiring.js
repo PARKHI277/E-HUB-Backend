@@ -1,6 +1,6 @@
 const express = require("express");
 const router = new express.Router();
-const Hiring = require("../schema_details/hiring");
+const Hiring = require("../models/hiring");
 const errorController = require("../controllers/errorController");
 const date = require("../services/date");
 
@@ -15,11 +15,11 @@ router.post("/hiring", async (req, res, next) => {
       eligibility,
       techStack,
     } = await req.body;
-    let validDate= date(lastDate);
-     if(!validDate)
-     return res.status(400).json({
-      success: false,
-      message: "Enter a valid date",
+    let validDate = date(lastDate);
+    if (!validDate)
+      return res.status(400).json({
+        success: false,
+        message: "Enter a valid date",
       });
     const hiring_create = new Hiring({
       position,
@@ -39,7 +39,7 @@ router.post("/hiring", async (req, res, next) => {
 
 router.get("/hiring", async (req, res) => {
   try {
-    const hiringdetail = await Hiring.find().sort({ "createdAt": -1 });
+    const hiringdetail = await Hiring.find().sort({ createdAt: -1 });
 
     res.status(200).send(hiringdetail);
   } catch (err) {

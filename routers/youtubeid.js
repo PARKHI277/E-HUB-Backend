@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const { youtube } = require("googleapis/build/src/apis/youtube");
 const router = new express.Router();
-const Youtube = require("../schema_details/youtube");
+const Youtube = require("../models/youtube");
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
@@ -61,7 +61,7 @@ router.post("/youtubeapi/:videoId", async (req, res) => {
 
 router.get("/youtubeapi", async (req, res) => {
   try {
-    const allids = await Youtube.find().sort({ "createdAt": -1 });
+    const allids = await Youtube.find().sort({ createdAt: -1 });
 
     res.status(200).send(allids);
   } catch (err) {
