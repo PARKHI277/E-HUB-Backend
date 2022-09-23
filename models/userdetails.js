@@ -44,8 +44,11 @@ const UserSchema = new Schema(
     otpuser: {
       type: Number,
     },
-  }
-  , {timestamps: true}
+    isAdmin: {
+      default: false,
+    },
+  },
+  { timestamps: true }
 );
 //UserSchema.index({"otpuser":1},{expireAfterSeconds: 10});
 
