@@ -1,6 +1,6 @@
 const express = require("express");
 const router = new express.Router();
-const Internship = require("../models/internshipDetails");
+const Internship = require("../models/internship");
 const errorController = require("../controllers/errorController");
 
 router.post("/internship", async (req, res, next) => {
