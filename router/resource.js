@@ -1,7 +1,6 @@
 const express = require("express");
 const router = new express.Router();
 const Resource = require("../models/resource");
-const errorController = require("../controllers/errorController");
 
 router.post("/resource", async (req, res, next) => {
   try {
