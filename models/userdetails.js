@@ -45,6 +45,7 @@ const UserSchema = new Schema(
       type: Number,
     },
     isAdmin: {
+      type: Boolean,
       default: false,
     },
   },

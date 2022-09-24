@@ -39,6 +39,7 @@ router.post("/signin", async (req, res) => {
       branch: user.branch,
       mobile: user.mobile,
       isVerified: user.isVerified,
+      isAdmin: user.isAdmin,
       accessToken: accessToken,
       refreshToken: refreshToken,
     });
