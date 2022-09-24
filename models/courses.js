@@ -4,20 +4,23 @@ const validate = require("validator");
 
 const Schema = mongoose.Schema;
 
-const courseschema = new Schema({
-  courseName: {
-    type: String,
-    required: [true, "Please enter Course Name"],
+const courseschema = new Schema(
+  {
+    courseName: {
+      type: String,
+      required: [true, "Please enter Course Name"],
+    },
+    description: {
+      type: String,
+      required: [true, "Please enter Course Description Name"],
+    },
+    lastDate: {
+      type: Date,
+      required: [true, "Please enter Last Date"],
+    },
   },
-  description: {
-    type: String,
-    required: [true, "Please enter Course Description Name"],
-  },
-  lastDate: {
-    type: Date,
-    required: [true, "Please enter Last Date"],
-  }
-},{ timestamps: true });
+  { timestamps: true }
+);
 
 const course = new mongoose.model("course", courseschema);
 module.exports = course;
