@@ -5,11 +5,29 @@ const errorController = require("../controllers/errorController");
 
 router.post("/handbook", async (req, res, next) => {
   try {
-    const { bookTitle, bookTagline, category, bookimgUrl, pdfUrl, imageUrl } =
-      await req.body;
+    const {
+      bookTitle,
+      bookTagline,
+      category,
+      bookimgUrl,
+      pdfUrl,
+      imageUrl,
+      description,
+      domain,
+      previewUrl,
+    } = await req.body;
     const bookexixt = await Handbook.find({ bookTitle });
 
-    if (!bookTitle && !bookTagline && !category && !bookimgUrl && !pdfUrl)
+    if (
+      !bookTitle &&
+      !bookTagline &&
+      !category &&
+      !bookimgUrl &&
+      !pdfUrl &&
+      !description &&
+      !domain &&
+      !previewUrl
+    )
       return res.status(400).json({
         success: false,
         message: "Please fill all the fields",
@@ -21,6 +39,9 @@ router.post("/handbook", async (req, res, next) => {
       pdfUrl,
       imageUrl,
       bookimgUrl,
+      description,
+      domain,
+      previewUrl,
     });
     const savehandbook = await handbook_create.save();
     res.status(201).send(savehandbook);
