@@ -7,35 +7,30 @@ const date = require("../services/date");
 // admin side
 router.post("/course", async (req, res, next) => {
   try {
-    const { courseName, description, lastDate } = await req.body;
+    const { title,about,posterUrl,  imageUrl,
+      mentorName,  position, company, syllabus } = await req.body;
 
-    if (!courseName && !description && !lastDate) {
+    if (!title && !about && !posterUrl && !mentorName && !syllabus) {
       return res.status(400).json({
         success: false,
         message: "Please fill all the fields",
       });
     }
-    let validDate = date(lastDate);
-    if (!validDate)
-      return res.status(400).json({
-        success: false,
-        message: "Enter a valid date",
-      });
-    const courseExist = await Course.findOne({ courseName });
+  
+    const courseExist = await Course.findOne({ title });
 
     if (courseExist) {
       return res.status(200).send({ message: "This Course already exists." });
     }
 
-    const course_create = new Course({
-      courseName,
-      description,
-      lastDate,
+    const courseCreate = new Course({
+      title,about,posterUrl,  imageUrl,
+      mentorName,  position, company, syllabus
     });
-    // course_create.lastDate instanceof Date;
-    // course_create.validateSync().errors["lastDate"]; // CastError
+    // courseCreate.lastDate instanceof Date;
+    // courseCreate.validateSync().errors["lastDate"]; // CastError
 
-    const savecourse = await course_create.save();
+    const savecourse = await courseCreate.save();
     res.status(201).send(savecourse);
   } catch (err) {
     errorController(err, req, res, next);
@@ -57,7 +52,7 @@ router.get("/course", async (req, res, nexr) => {
 
 router.patch("/course/:id", async (req, res) => {
   try {
-    if (!courseName || !description || !lastDate)
+    if (!title || !about || !posterUrl || !mentorName || !syllabus)
       return res.status(400).json({
         success: false,
         message: "Please fill atleast one field.",
@@ -94,7 +89,7 @@ router.delete("/course/:id", async (req, res) => {
     if (!course) {
       return res.status(400).json({
         success: false,
-        message: "This course id doesn't exixt",
+        message: "This course id doesn't exist",
       });
     } else {
       return res.status(200).json({
