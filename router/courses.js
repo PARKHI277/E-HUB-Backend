@@ -52,7 +52,9 @@ router.get("/course", async (req, res, nexr) => {
 
 router.patch("/course/:id", async (req, res) => {
   try {
-    if (!title || !about || !posterUrl || !mentorName || !syllabus)
+    const { title,about,posterUrl,  imageUrl,
+      mentorName,  position, company, syllabus } = await req.body;
+    if (!title || !about || !posterUrl || !mentorName || !syllabus || !imageUrl || !position || !company)
       return res.status(400).json({
         success: false,
         message: "Please fill atleast one field.",
