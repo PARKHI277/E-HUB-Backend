@@ -4,23 +4,45 @@ const validate = require("validator");
 
 const Schema = mongoose.Schema;
 
-const courseschema = new Schema(
+const courseSchema = new Schema(
   {
-    courseName: {
+    title: {
       type: String,
-      required: [true, "Please enter Course Name"],
+      required: [true, "Please enter Title"],
     },
-    description: {
+    about: {
       type: String,
-      required: [true, "Please enter Course Description Name"],
+      required: [true, "Please enter about the course"],
     },
-    lastDate: {
-      type: Date,
-      required: [true, "Please enter Last Date"],
+    posterUrl: {
+      type: String,
+      required: [true, "Enter poster url."],
+      unique: true,
     },
+    imageUrl: {
+      type: Array
+    },
+    mentorName: {
+      type: String,
+      required: [true, "Enter a mentor name."],
+    },
+    position: {
+      type: String
+    },
+    company: {
+      type: String
+    },
+    syllabus:{type:Array,
+      "day":{type:Number},
+    "title":{type:String},
+  "description":{type:String},
+"url":{type:String},
+required: [true, "Enter syllabus"]
+}
+    
   },
   { timestamps: true }
 );
 
-const course = new mongoose.model("course", courseschema);
+const course = new mongoose.model("course", courseSchema);
 module.exports = course;
