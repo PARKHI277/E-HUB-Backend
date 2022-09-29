@@ -5,21 +5,41 @@ const errorController = require("../controllers/errorController");
 
 router.post("/internship", async (req, res, next) => {
   try {
-    const { internPosition, internCompany, internLink } = await req.body;
-    const internPexist = await Internship.findOne({ internPosition });
-    const internCexist = await Internship.findOne({ internCompany });
-    const internLexist = await Internship.findOne({ internLink });
+    const {
+      internPosition,
+      internCompany,
+      applyUrl,
+      description,
+      location,
+      type,
+      timing,
+    } = await req.body;
+    const internexist = await Internship.findOne({
+      internPosition,
+      internCompany,
+      applyUrl,
+      description,
+      location,
+      type,
+      timing,
+    });
+    // const internCexist = await Internship.findOne({ internCompany });
+    // const internLexist = await Internship.findOne({ internLink });
 
-    if (internPexist && internCexist && internLexist) {
+    if (internexist) {
       return res
         .status(400)
-        .send({ message: "This internship detail already exists." });
+        .send({ message: "This internship details already exists." });
     }
 
     const internship_create = new Internship({
       internPosition,
       internCompany,
-      internLink,
+      applyUrl,
+      description,
+      location,
+      type,
+      timing,
     });
 
     const saveinternship = await internship_create.save();

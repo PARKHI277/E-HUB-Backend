@@ -4,30 +4,32 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 require("./connection/data");
 const cookieparser = require("cookie-parser");
-const SignupRouter = require("./router/signup");
-const LoginRouter = require("./router/login");
+const signupRouter = require("./router/signup");
+const loginRouter = require("./router/login");
 const BodyParser = require("body-parser");
-const handbookrouter = require("./router/handbook");
+const handbookRouter = require("./router/handbook");
 const eventRouter = require("./router/event");
-const resourcerouter = require("./router/resource");
-const mentorrouter = require("./router/mentor");
-const hiringrouter = require("./router/hiring");
-const industryrouter = require("./router/industrypersonality");
+const resourceRouter = require("./router/resource");
+const mentorRouter = require("./router/mentor");
+const hiringRouter = require("./router/hiring");
+const industryRouter = require("./router/industrypersonality");
 const internshipRouter = require("./router/internship");
-const youtube = require("./router/youtubeid");
-const campusactivity = require("./router/campus");
-const collegerouter = require("./router/college");
-const teamrouter = require("./router/team");
+const youtubeRouter = require("./router/youtubeid");
+const campusRouter = require("./router/campus");
+const collegeRouter = require("./router/college");
+const teamRouter = require("./router/team");
 const testimonialRouter = require("./router/testimonial");
-const branchrouter = require("./router/Branch");
-const courserouter = require("./router/courses");
-const instarouter = require("./router/instagram");
+const branchRouter = require("./router/Branch");
+const courseRouter = require("./router/courses");
+const instaRouter = require("./router/instagram");
+const queryRouter = require("./router/query");
+const domainRouter = require("./router/domain");
 const passport = require("passport");
 const session = require("express-session");
+
 const MongoDBStore = require("connect-mongodb-session")(session);
 
 const errorController = require("./controllers/errorController");
-const domainrouter = require("./router/domain");
 
 const app = express();
 require("./config/passport")(passport);
@@ -72,24 +74,25 @@ app.get("/", (req, res) => {
 app.use(express.json());
 
 //router
-app.use("/api/v1", SignupRouter);
-app.use("/api/v1", LoginRouter);
+app.use("/api/v1", signupRouter);
+app.use("/api/v1", loginRouter);
 app.use("/api/v1", eventRouter);
-app.use("/api/v1", resourcerouter);
-app.use("/api/v1", mentorrouter);
-app.use("/api/v1", hiringrouter);
-app.use("/api/v1", industryrouter);
+app.use("/api/v1", resourceRouter);
+app.use("/api/v1", mentorRouter);
+app.use("/api/v1", hiringRouter);
+app.use("/api/v1", industryRouter);
 app.use("/api/v1", internshipRouter);
-app.use("/api/v1", handbookrouter);
-app.use("/api/v1", collegerouter);
-app.use("/api/v1", teamrouter);
+app.use("/api/v1", handbookRouter);
+app.use("/api/v1", collegeRouter);
+app.use("/api/v1", teamRouter);
 app.use("/api/v1", testimonialRouter);
-app.use("/api/v1", branchrouter);
-app.use("/api/v1", youtube);
-app.use("/api/v1", campusactivity);
-app.use("/api/v1", domainrouter);
-app.use("/api/v1", courserouter);
-app.use("/api/v1", instarouter);
+app.use("/api/v1", branchRouter);
+app.use("/api/v1", youtubeRouter);
+app.use("/api/v1", campusRouter);
+app.use("/api/v1", domainRouter);
+app.use("/api/v1", courseRouter);
+app.use("/api/v1", instaRouter);
+app.use("/api/v1", queryRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
