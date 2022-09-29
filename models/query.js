@@ -8,8 +8,8 @@ const querySchema = new Schema(
   {
     query: {
       type: Array,
-      url: { type: String },
-      domain: { type: String },
+      "url": { type: String },
+      "domain": { type: String },
       required: [true, "Enter Query"],
     },
   },
