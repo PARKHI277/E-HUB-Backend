@@ -7,18 +7,18 @@ const { models } = require("mongoose");
 router.post("/query", async (req, res, next) => {
   try {
     const { query } = await req.body;
-    const queryexixt = await Query.findOne({ query });
+    const queryExist = await Query.findOne({ query });
 
-    if (queryexixt) {
-      return res.status(200).send({ message: "This Query already exists." });
+    if (queryExist) {
+      return res.status(200).send({ message: "This query already exists." });
     }
 
-    const query_create = new Query({
-      query,
+    const queryCreate = new Query({
+      query
     });
 
-    const savequery = await query_create.save();
-    res.status(201).send(savequery);
+    const saveQuery = await queryCreate.save();
+    res.status(201).send(saveQuery);
   } catch (err) {
     errorController(err, req, res, next);
   }
