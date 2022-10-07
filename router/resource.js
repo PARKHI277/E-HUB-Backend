@@ -34,6 +34,21 @@ router.get("/resource", async (req, res) => {
   }
 });
 
+router.get("/resource/:id", async (req, res,next) => {
+  try {
+    
+    const resourceFound = await Resource.findById(req.params.id);
+if(!resourceFound)
+return res.status(400).json({
+  success: false,
+  message: "Id not found",
+});
+    res.status(200).send(resourceFound);
+  } catch (err) {
+    errorController(err, req, res, next);
+  }
+});
+
 // router.patch("/resource/:id", async (req, res) => {
 //   try {
 //     if (!resourceName || !resourceName)

@@ -50,6 +50,22 @@ router.get("/course", async (req, res, nexr) => {
   }
 });
 
+
+router.get("/course/:id", async (req, res,next) => {
+  try {
+    
+    const courseFound = await Course.findById(req.params.id);
+if(!courseFound)
+return res.status(400).json({
+  success: false,
+  message: "Id not found",
+});
+    res.status(200).send(courseFound);
+  } catch (err) {
+    errorController(err, req, res, next);
+  }
+});
+
 router.patch("/course/:id", async (req, res) => {
   try {
     const { title,about,posterUrl,  imageUrl,

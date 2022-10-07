@@ -66,6 +66,21 @@ router.get("/campus", async (req, res) => {
   }
 });
 
+router.get("/campus/:id", async (req, res,next) => {
+  try {
+    
+    const campusFound = await Campus.findById(req.params.id);
+if(!campusFound)
+return res.status(400).json({
+  success: false,
+  message: "Id not found",
+});
+    res.status(200).send(campusFound);
+  } catch (err) {
+    errorController(err, req, res, next);
+  }
+});
+
 router.patch("/campus/:id", async (req, res) => {
   try {
     if (
