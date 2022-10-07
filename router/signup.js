@@ -45,8 +45,7 @@ router.post("/signup", async (req, res) => {
 
     const Password = req.body.password;
 
-    const strongPasswords =
-      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+    const strongPasswords =/^(?=.*\d)(?=.*[!@#$%^&*-?])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
     if (!confirmPassword && Password)
       return res.status(400).json({
         success: false,
@@ -157,12 +156,12 @@ router.post("/signup", async (req, res) => {
       } else {
         res
           .status(400)
-          .send({ message: "Password and confirmPassword do not match" });
+          .send({ message: "Password and confirm password do not match" });
       }
     } else {
       res.status(400).send({
         mesaage:
-          "Password should be longer than 8 characters and it has to include at least one number,one uppercase letter , one special charcter and one lowercase , Password should start from uppercase Letter",
+          "Password should have minimum 8 characters and include atleast one digit,one uppercase letter, one lowercase letter and one special character.",
       });
       //
     }
