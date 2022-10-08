@@ -5,12 +5,13 @@ const Team = require("../models/team");
 // admin
 router.post("/team", async (req, res, next) => {
   try {
-    const { name, position, description, mobile } = await req.body;
+    const { name, position, description, image, linkedinUrl } = await req.body;
     const team_create = new Team({
       name,
       position,
       description,
-      mobile,
+      linkedinUrl,
+      image,
     });
     const saveteam = await team_create.save();
     res.status(201).send(saveteam);
