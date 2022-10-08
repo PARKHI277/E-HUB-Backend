@@ -50,4 +50,20 @@ router.get("/hiring", async (req, res) => {
   }
 });
 
+
+router.get("/hiring/:id", async (req, res,next) => {
+  try {
+    
+    const detailFound = await Hiring.findById(req.params.id);
+if(!detailFound)
+return res.status(400).json({
+  success: false,
+  message: "Id not found",
+});
+    res.status(200).send(detailFound);
+  } catch (err) {
+    errorController(err, req, res, next);
+  }
+});
+
 module.exports = router;
