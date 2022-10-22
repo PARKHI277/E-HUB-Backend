@@ -8,9 +8,9 @@ const date = require("../services/date");
 router.post("/course", async (req, res, next) => {
   try {
     const { title,about,posterUrl,  imageUrl,
-      mentorName,  position, company, syllabus } = await req.body;
+      mentorName, mentorImage, position, company, syllabus } = await req.body;
 
-    if (!title && !about && !posterUrl && !mentorName && !syllabus) {
+    if (!title && !about && !posterUrl && !mentorName && !mentorImage &&  !syllabus) {
       return res.status(400).json({
         success: false,
         message: "Please fill all the fields",
@@ -25,7 +25,7 @@ router.post("/course", async (req, res, next) => {
 
     const courseCreate = new Course({
       title,about,posterUrl,  imageUrl,
-      mentorName,  position, company, syllabus
+      mentorName, mentorImage, position, company, syllabus
     });
     // courseCreate.lastDate instanceof Date;
     // courseCreate.validateSync().errors["lastDate"]; // CastError
@@ -69,8 +69,8 @@ return res.status(400).json({
 router.patch("/course/:id", async (req, res) => {
   try {
     const { title,about,posterUrl,  imageUrl,
-      mentorName,  position, company, syllabus } = await req.body;
-   if (!(title || about || posterUrl || mentorName || syllabus || imageUrl || position || company))
+      mentorName, mentorImage,  position, company, syllabus } = await req.body;
+   if (!(title || about || posterUrl || mentorName || mentorImage || syllabus || imageUrl || position || company))
    return res.status(400).json({
     success: false,
     message: "Please fill atleast one field.",

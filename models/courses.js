@@ -26,6 +26,10 @@ const courseSchema = new Schema(
       type: String,
       required: [true, "Enter a mentor name."],
     },
+    mentorImage: {
+      type: Array,
+      required: [true, "Enter a mentor image."],
+    },
     position: {
       type: String
     },
