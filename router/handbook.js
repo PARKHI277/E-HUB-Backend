@@ -11,10 +11,7 @@ router.post("/handbook", async (req, res, next) => {
       category,
       bookimgUrl,
       pdfUrl,
-      imageUrl,
       description,
-      domain,
-      previewUrl,
     } = await req.body;
     const bookexixt = await Handbook.find({ bookTitle });
 
@@ -24,9 +21,7 @@ router.post("/handbook", async (req, res, next) => {
       !category &&
       !bookimgUrl &&
       !pdfUrl &&
-      !description &&
-      !domain &&
-      !previewUrl
+      !description
     )
       return res.status(400).json({
         success: false,
@@ -37,11 +32,9 @@ router.post("/handbook", async (req, res, next) => {
       bookTagline,
       category,
       pdfUrl,
-      imageUrl,
+
       bookimgUrl,
       description,
-      domain,
-      previewUrl,
     });
     const savehandbook = await handbook_create.save();
     res.status(201).send(savehandbook);

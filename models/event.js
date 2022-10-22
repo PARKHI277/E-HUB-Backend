@@ -4,12 +4,6 @@ const validator = require("validator");
 const Schema = mongoose.Schema;
 const eventSchema = new Schema(
   {
-    //eventId: {
-    //   type:Number,
-    //   unique:true,
-    //   require:true,
-    //   default:0
-    // },
     mentorName: {
       type: String,
       required: [true, "Enter a mentor name."],

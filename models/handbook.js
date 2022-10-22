@@ -16,23 +16,17 @@ const HandbookSchema = new Schema(
       type: String,
       required: [true, "Category is required"],
     },
-    pdfUrl: { type: String, required: [true, "Pdf Url is required"] },
+    pdfUrl: {
+      type: String,
+      required: [true, "Pdf Url is required"],
+    },
     bookimgUrl: {
       type: String,
       required: [true, "Booking Url is required"],
     },
-    imageUrl: { type: Array },
     description: {
       type: String,
       required: [true, "Description is required"],
-    },
-    previewUrl: {
-      type: String,
-      required: [true, "Preview Url is required"],
-    },
-    domain: {
-      type: String,
-      required: [true, "Domain is required"],
     },
   },
   { timestamps: true }
