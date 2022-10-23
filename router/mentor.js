@@ -7,16 +7,18 @@ router.post("/mentor", async (req, res, next) => {
   try {
     const {
       mentorName,
+      mentorImage,
       mentorDomain,
-      mentorNumber,
+
       linkedinUrl,
       about,
       position,
     } = await req.body;
     const Mentor_create = new Mentor({
       mentorName,
+      mentorImage,
       mentorDomain,
-      mentorNumber,
+
       linkedinUrl,
       about,
       position,

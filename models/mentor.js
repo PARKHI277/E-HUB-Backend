@@ -15,12 +15,7 @@ const MentorSchema = new Schema(
       type: String,
       required: [true, "Mentor Domain is required"],
     },
-    mentorNumber: {
-      type: Number,
-      required: [true, "Mentor Number is required"],
-      maxLength: 10,
-      minLength: 10,
-    },
+
     position: {
       type: String,
       required: [true, "Mentor Position is required"],
@@ -32,6 +27,10 @@ const MentorSchema = new Schema(
     linkedinUrl: {
       type: String,
       required: [true, "Mentor Linkedin Url is required"],
+    },
+    mentorImage: {
+      type: String,
+      required: [true, "Mentor Image is required"],
     },
   },
   { timestamps: true }
