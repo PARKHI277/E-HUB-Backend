@@ -31,7 +31,7 @@ router.post("/event", async (req, res, next) => {
         message: "Please fill all the fields",
       });
     let validDate = date(eventDate);
-    if (!validDate)
+    if (validDate===false)
       return res.status(400).json({
         success: false,
         message: "Enter a valid date",
