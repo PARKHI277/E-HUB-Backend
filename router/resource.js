@@ -4,9 +4,10 @@ const Resource = require("../models/resource");
 
 router.post("/resource", async (req, res, next) => {
   try {
-    const { resourceName, resourceLink } = await req.body;
+    const { resourceName, resourceLink, domain } = await req.body;
     const resourcenameexist = await Resource.findOne({ resourceName });
     const resourcelinkexist = await Resource.findOne({ resourceLink });
+
     if (resourcenameexist && resourcelinkexist) {
       return res.status(400).send({ message: "This Resource already exists." });
     }
@@ -14,6 +15,7 @@ router.post("/resource", async (req, res, next) => {
     const resourcelink_create = new Resource({
       resourceName,
       resourceLink,
+      domain,
     });
 
     const saveresourcelink = await resourcelink_create.save();
@@ -34,15 +36,14 @@ router.get("/resource", async (req, res) => {
   }
 });
 
-router.get("/resource/:id", async (req, res,next) => {
+router.get("/resource/:id", async (req, res, next) => {
   try {
-    
     const resourceFound = await Resource.findById(req.params.id);
-if(!resourceFound)
-return res.status(400).json({
-  success: false,
-  message: "Id not found",
-});
+    if (!resourceFound)
+      return res.status(400).json({
+        success: false,
+        message: "Id not found",
+      });
     res.status(200).send(resourceFound);
   } catch (err) {
     errorController(err, req, res, next);
