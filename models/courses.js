@@ -11,7 +11,7 @@ const courseSchema = new Schema(
       required: [true, "Please enter Title"],
     },
     about: {
-      type: String,
+      type: Array,
       required: [true, "Please enter about the course"],
     },
     posterUrl: {
