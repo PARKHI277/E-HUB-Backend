@@ -8,15 +8,24 @@ const date = function date(eventDate) {
   let eventYear=eventDate.toString().slice(0,4);
   console.log("You are in validate date services");
   if (year>eventYear)
-  {return false;}
+  {
+    return false;}
   else{
   if(month>eventMonth)
-  return false;
+ { 
+  return false;}
+  else if(month==eventMonth)
+  {
+    if(currDate>validDate)
+  {return false;}
   else
-  {if(currDate>validDate)
-  return false;
+  {
+    return true;}}
   else
-  return true;}}
+{
+    return true;
+
+}}
   
   }
   

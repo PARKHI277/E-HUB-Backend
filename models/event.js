@@ -19,7 +19,6 @@ const eventSchema = new Schema(
     },
     eventCode: {
       type: String,
-      unique: true,
       default: null,
     },
     description: {
