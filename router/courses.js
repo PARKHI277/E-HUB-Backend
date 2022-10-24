@@ -7,10 +7,10 @@ const date = require("../services/date");
 // admin side
 router.post("/course", async (req, res, next) => {
   try {
-    const { title,about,posterUrl,  imageUrl,
+    const { title,about,features,posterUrl,  imageUrl,
       mentorName, mentorImage, position, company, syllabus } = await req.body;
 
-    if (!title && !about && !posterUrl && !mentorName && !mentorImage &&  !syllabus) {
+    if (!title && !about && !features && !posterUrl && !mentorName && !mentorImage &&  !syllabus) {
       return res.status(400).json({
         success: false,
         message: "Please fill all the fields",
@@ -24,7 +24,7 @@ router.post("/course", async (req, res, next) => {
     }
 
     const courseCreate = new Course({
-      title,about,posterUrl,  imageUrl,
+      title,about,features,posterUrl,  imageUrl,
       mentorName, mentorImage, position, company, syllabus
     });
     // courseCreate.lastDate instanceof Date;
@@ -68,9 +68,9 @@ return res.status(400).json({
 
 router.patch("/course/:id", async (req, res) => {
   try {
-    const { title,about,posterUrl,  imageUrl,
+    const { title,about,features,posterUrl,  imageUrl,
       mentorName, mentorImage,  position, company, syllabus } = await req.body;
-   if (!(title || about || posterUrl || mentorName || mentorImage || syllabus || imageUrl || position || company))
+   if (!(title || about || features|| posterUrl || mentorName || mentorImage || syllabus || imageUrl || position || company))
    return res.status(400).json({
     success: false,
     message: "Please fill atleast one field.",
