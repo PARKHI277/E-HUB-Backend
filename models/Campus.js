@@ -30,7 +30,7 @@ const campusSchema = new Schema(
     },
     eventDate: {
       type: Date,
-      required: [true, "Event Date is required"],
+    
     },
     price: {
       type: String,
