@@ -36,5 +36,5 @@ const MentorSchema = new Schema(
   { timestamps: true }
 );
 
-const Mentor = new mongoose.model("Domain", MentorSchema);
+const Mentor = new mongoose.model("mentor", MentorSchema);
 module.exports = Mentor;

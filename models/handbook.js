@@ -20,7 +20,7 @@ const HandbookSchema = new Schema(
       type: String,
       required: [true, "Pdf Url is required"],
     },
-    bookimgUrl: {
+    bookingUrl: {
       type: String,
       required: [true, "Booking Url is required"],
     },
