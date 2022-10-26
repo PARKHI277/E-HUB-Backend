@@ -54,11 +54,8 @@ router.post("/campus", async (req, res, next) => {
 // user side
 router.get("/campus", async (req, res) => {
   try {
-    let currentDate = new Date().toISOString();
-    const allcampus = await Campus.find({
-      eventDate: { $gte: currentDate },
-    }).sort({ createdAt: -1 });
-
+    const allcampus = await Campus.find().sort({ createdAt: -1 });
+    console.log(allcampus);
     res.status(200).send(allcampus);
   } catch (err) {
     console.log(err);
@@ -66,15 +63,14 @@ router.get("/campus", async (req, res) => {
   }
 });
 
-router.get("/campus/:id", async (req, res,next) => {
+router.get("/campus/:id", async (req, res, next) => {
   try {
-    
     const campusFound = await Campus.findById(req.params.id);
-if(!campusFound)
-return res.status(400).json({
-  success: false,
-  message: "Id not found",
-});
+    if (!campusFound)
+      return res.status(400).json({
+        success: false,
+        message: "Id not found",
+      });
     res.status(200).send(campusFound);
   } catch (err) {
     errorController(err, req, res, next);
