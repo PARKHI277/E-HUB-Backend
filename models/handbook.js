@@ -22,7 +22,7 @@ const HandbookSchema = new Schema(
     },
     bookimgUrl: {
       type: String,
-      required: [true, "Booking Url is required"],
+      required: [true, "Book image Url is required"],
     },
     description: {
       type: String,
