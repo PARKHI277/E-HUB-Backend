@@ -9,7 +9,7 @@ router.post("/handbook", async (req, res, next) => {
       bookTitle,
       bookTagline,
       category,
-      bookingUrl,
+      bookimgUrl,
       pdfUrl,
       description,
     } = await req.body;
@@ -19,7 +19,7 @@ router.post("/handbook", async (req, res, next) => {
       !bookTitle &&
       !bookTagline &&
       !category &&
-      !bookingUrl &&
+      !bookimgUrl &&
       !pdfUrl &&
       !description
     )
@@ -33,7 +33,7 @@ router.post("/handbook", async (req, res, next) => {
       category,
       pdfUrl,
 
-      bookingUrl,
+      bookimgUrl,
       description,
     });
     const savehandbook = await handbook_create.save();

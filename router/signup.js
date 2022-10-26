@@ -156,17 +156,17 @@ router.post("/signup", async (req, res) => {
       } else {
         res
           .status(400)
-          .send({ message: "Password and confirm password do not match" });
+          .send({success: false, message: "Password and confirm password do not match" });
       }
     } else {
-      res.status(400).send({
-        mesaage:
+      res.status(400).send({success: false,
+        message:
           "Password should have minimum 8 characters and include atleast one digit,one uppercase letter, one lowercase letter and one special character.",
       });
       //
     }
   } catch (err) {
-    return res.status(400).send({ message: "Something went wrong" });
+    return res.status(400).send({success: false, message: "Something went wrong" });
   }
 });
 
