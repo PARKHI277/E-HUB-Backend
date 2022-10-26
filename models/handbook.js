@@ -20,9 +20,9 @@ const HandbookSchema = new Schema(
       type: String,
       required: [true, "Pdf Url is required"],
     },
-    bookingUrl: {
+    bookimgUrl: {
       type: String,
-      required: [true, "Booking Url is required"],
+      required: [true, "Book image Url is required"],
     },
     description: {
       type: String,
