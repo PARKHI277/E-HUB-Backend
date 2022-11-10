@@ -6,6 +6,7 @@ require("./connection/data");
 const cookieparser = require("cookie-parser");
 const signupRouter = require("./router/signup");
 const loginRouter = require("./router/login");
+const googleloginRouter = require("./router/googlelogin");
 const BodyParser = require("body-parser");
 const handbookRouter = require("./router/handbook");
 const eventRouter = require("./router/event");
@@ -74,6 +75,7 @@ app.get("/", (req, res) => {
 app.use(express.json());
 
 //router
+app.use("/api", googleloginRouter);
 app.use("/api/v1", signupRouter);
 app.use("/api/v1", loginRouter);
 app.use("/api/v1", eventRouter);
