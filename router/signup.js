@@ -3,7 +3,6 @@ const router = new express.Router();
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
-const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
@@ -249,21 +248,20 @@ router.get("/allusers", async (req, res) => {
     res.status(500).send(err);
   }
 });
-
 // Google - auth route
 // for sigin
-router.get(
-  "/auth/google",
-  passport.authenticate("google", { scope: ["profile"] })
-);
-router.get(
-  "/auth/google/callback",
-  passport.authenticate("google", { failureRedirect: "/login" }),
-  (req, res, next) => {
-    console.log(req.user);
-    res.send("user is logged in");
-  }
-);
+// router.get(
+//   "/auth/google",
+//   passport.authenticate("google", { scope: ["profile"] })
+// );
+// router.get(
+//   "/auth/google/callback",
+//   passport.authenticate("google", { failureRedirect: "/login" }),
+//   (req, res, next) => {
+//     console.log(req.user);
+//     res.send("user is logged in");
+//   }
+// );
 
 router.get("/user", async (req, res) => {
   try {

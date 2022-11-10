@@ -10,8 +10,6 @@ let refreshTokens = [];
 const { sign, verify } = require("jsonwebtoken");
 const auth_verify = require("../middleware/auth");
 
-// --------- login the user ------------
-
 router.post("/signin", async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
   if (!user)
@@ -93,8 +91,11 @@ async function auth(req, res, next) {
   });
 }
 
-// Protected route, can only be accessed when user is logged-in
-router.post("/protected", auth, (req, res) => {
-  return res.json({ message: "Protected content!" });
-});
+// // Protected route, can only be accessed when user is logged-in
+// router.get("/protected", (req, res) => {
+//   return res.json({ message: "Protected content!" });
+// });
+// router.get("/unprotected", (req, res) => {
+//   return res.json({ message: "UnProtected content!" });
+// });
 module.exports = router;
