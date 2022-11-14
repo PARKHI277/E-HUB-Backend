@@ -44,7 +44,8 @@ router.post("/signup", async (req, res) => {
 
     const Password = req.body.password;
 
-    const strongPasswords =/^(?=.*\d)(?=.*[!@#$%^&*-?])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    const strongPasswords =
+      /^(?=.*\d)(?=.*[!@#$%^&*-?])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
     if (!confirmPassword && Password)
       return res.status(400).json({
         success: false,
@@ -153,19 +154,23 @@ router.post("/signup", async (req, res) => {
             //  res.status(400).send(err.message);
           });
       } else {
-        res
-          .status(400)
-          .send({success: false, message: "Password and confirm password do not match" });
+        res.status(400).send({
+          success: false,
+          message: "Password and confirm password do not match",
+        });
       }
     } else {
-      res.status(400).send({success: false,
+      res.status(400).send({
+        success: false,
         message:
           "Password should have minimum 8 characters and include atleast one digit,one uppercase letter, one lowercase letter and one special character.",
       });
       //
     }
   } catch (err) {
-    return res.status(400).send({success: false, message: "Something went wrong" });
+    return res
+      .status(400)
+      .send({ success: false, message: "Something went wrong" });
   }
 });
 
@@ -334,6 +339,7 @@ router.patch("/user", async (req, res) => {
       {
         $set: req.body,
       },
+
       function (err, docs) {
         if (err) {
           console.log(err);
