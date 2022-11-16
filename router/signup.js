@@ -310,51 +310,75 @@ router.get("/user", async (req, res) => {
   }
 });
 
-router.patch("/user", async (req, res) => {
+router.patch("/user/:id", async (req, res) => {
   try {
-    const accessToken = req.body.accessToken;
-    if (!accessToken)
+    if (
+      !collegeName ||
+      !collegePhoto ||
+      !eventName ||
+      !description ||
+      !condition ||
+      !eventType ||
+      !eventDate ||
+      !price
+    )
       return res.status(400).json({
         success: false,
-        message: "Send access token",
+        message: "Please fill atleast one field.",
       });
-    const dec = accessToken.split(".")[1];
-    //console.log(dec);
-    if (!dec) {
-      return res.status(400).json({
-        success: false,
-        message: "Send access token in proper format.",
-      });
-    }
-    const decode = JSON.parse(atob(dec));
-    //console.log(decode);
-    if (!decode) {
-      return res.status(400).json({
-        success: false,
-        message: "Send access token in proper format.",
-      });
-    }
-    User.findByIdAndUpdate(
-      decode.user_create,
+
+    Campus.findByIdAndUpdate(
+      req.params.id,
       {
         $set: req.body,
       },
-
       function (err, docs) {
         if (err) {
           console.log(err);
         } else {
           res.status(200).json({
             success: true,
-            message: "User details got updated",
+            message: "Campus Details got updated ",
           });
         }
       }
     );
   } catch (err) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
-      message: err,
+      message: "Enter fields to update ",
+    });
+  }
+});
+
+router.delete("/campus/:id", async (req, res) => {
+  try {
+    if (req.body == NULL)
+      return res.status(400).json({
+        success: false,
+        message: "Please fill atleast one field.",
+      });
+
+    User.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: req.body,
+      },
+      function (err, docs) {
+        if (err) {
+          console.log(err);
+        } else {
+          res.status(200).json({
+            success: true,
+            message: "User Details got updated ",
+          });
+        }
+      }
+    );
+  } catch (err) {
+    return res.status(400).json({
+      success: false,
+      message: "Enter fields to update ",
     });
   }
 });
