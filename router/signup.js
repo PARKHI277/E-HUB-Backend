@@ -312,7 +312,7 @@ router.get("/user", async (req, res) => {
 
 router.patch("/user/:id", async (req, res) => {
   try {
-    if (req.body == NULL)
+    if (req.body == undefined)
       return res.status(400).json({
         success: false,
         message: "Please fill atleast one field.",
@@ -335,6 +335,7 @@ router.patch("/user/:id", async (req, res) => {
       }
     );
   } catch (err) {
+    console.log(err);
     return res.status(400).json({
       success: false,
       message: "Enter fields to update ",
