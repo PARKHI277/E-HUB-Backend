@@ -312,47 +312,6 @@ router.get("/user", async (req, res) => {
 
 router.patch("/user/:id", async (req, res) => {
   try {
-    if (
-      !collegeName ||
-      !collegePhoto ||
-      !eventName ||
-      !description ||
-      !condition ||
-      !eventType ||
-      !eventDate ||
-      !price
-    )
-      return res.status(400).json({
-        success: false,
-        message: "Please fill atleast one field.",
-      });
-
-    Campus.findByIdAndUpdate(
-      req.params.id,
-      {
-        $set: req.body,
-      },
-      function (err, docs) {
-        if (err) {
-          console.log(err);
-        } else {
-          res.status(200).json({
-            success: true,
-            message: "Campus Details got updated ",
-          });
-        }
-      }
-    );
-  } catch (err) {
-    return res.status(400).json({
-      success: false,
-      message: "Enter fields to update ",
-    });
-  }
-});
-
-router.delete("/campus/:id", async (req, res) => {
-  try {
     if (req.body == NULL)
       return res.status(400).json({
         success: false,
