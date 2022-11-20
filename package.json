@@ -50,5 +50,6 @@
     "session": "^0.1.0",
     "validator": "^13.7.0"
   },
-  "keywords": []
+  "keywords": [],
+  "devDependencies": {}
 }
