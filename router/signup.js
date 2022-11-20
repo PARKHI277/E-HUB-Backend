@@ -44,7 +44,8 @@ router.post("/signup", async (req, res) => {
 
     const Password = req.body.password;
 
-    const strongPasswords =/^(?=.*\d)(?=.*[!@#$%^&*-?])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    const strongPasswords =
+      /^(?=.*\d)(?=.*[!@#$%^&*-?])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
     if (!confirmPassword && Password)
       return res.status(400).json({
         success: false,
@@ -153,19 +154,23 @@ router.post("/signup", async (req, res) => {
             //  res.status(400).send(err.message);
           });
       } else {
-        res
-          .status(400)
-          .send({success: false, message: "Password and confirm password do not match" });
+        res.status(400).send({
+          success: false,
+          message: "Password and confirm password do not match",
+        });
       }
     } else {
-      res.status(400).send({success: false,
+      res.status(400).send({
+        success: false,
         message:
           "Password should have minimum 8 characters and include atleast one digit,one uppercase letter, one lowercase letter and one special character.",
       });
       //
     }
   } catch (err) {
-    return res.status(400).send({success: false, message: "Something went wrong" });
+    return res
+      .status(400)
+      .send({ success: false, message: "Something went wrong" });
   }
 });
 
@@ -305,32 +310,16 @@ router.get("/user", async (req, res) => {
   }
 });
 
-router.patch("/user", async (req, res) => {
+router.patch("/user/:id", async (req, res) => {
   try {
-    const accessToken = req.body.accessToken;
-    if (!accessToken)
+    if (req.body == undefined)
       return res.status(400).json({
         success: false,
-        message: "Send access token",
+        message: "Please fill atleast one field.",
       });
-    const dec = accessToken.split(".")[1];
-    //console.log(dec);
-    if (!dec) {
-      return res.status(400).json({
-        success: false,
-        message: "Send access token in proper format.",
-      });
-    }
-    const decode = JSON.parse(atob(dec));
-    //console.log(decode);
-    if (!decode) {
-      return res.status(400).json({
-        success: false,
-        message: "Send access token in proper format.",
-      });
-    }
+
     User.findByIdAndUpdate(
-      decode.user_create,
+      req.params.id,
       {
         $set: req.body,
       },
@@ -340,15 +329,16 @@ router.patch("/user", async (req, res) => {
         } else {
           res.status(200).json({
             success: true,
-            message: "User details got updated",
+            message: "User Details got updated ",
           });
         }
       }
     );
   } catch (err) {
-    res.status(400).json({
+    console.log(err);
+    return res.status(400).json({
       success: false,
-      message: err,
+      message: "Enter fields to update ",
     });
   }
 });
