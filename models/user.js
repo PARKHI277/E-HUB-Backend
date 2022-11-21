@@ -48,6 +48,30 @@ const UserSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    firstName: {
+      type: String,
+      default: null,
+    },
+    lastName: {
+      type: String,
+      default: null,
+    },
+    gender: {
+      type: String,
+      default: null,
+    },
+    dob: {
+      type: Date,
+      default: null,
+    },
+    designation: {
+      type: String,
+      default: null,
+    },
+    year: {
+      type: String,
+      default: null,
+    },
   },
   { timestamps: true }
 );
