@@ -310,16 +310,32 @@ router.get("/user", async (req, res) => {
   }
 });
 
-router.patch("/user/:id", async (req, res) => {
+router.patch("/user", async (req, res) => {
   try {
-    if (req.body == undefined)
+    const accessToken = req.body.accessToken;
+    if (!accessToken)
       return res.status(400).json({
         success: false,
-        message: "Please fill atleast one field.",
+        message: "Send access token",
       });
+    const dec = accessToken.split(".")[1];
+    if (!dec) {
+      return res.status(400).json({
+        success: false,
+        message: "Send access token in proper format.",
+      });
+    }
+    const decode = JSON.parse(atob(dec));
+    console.log(decode);
+    if (!decode) {
+      return res.status(400).json({
+        success: false,
+        message: "Send access token in proper format.",
+      });
+    }
 
     User.findByIdAndUpdate(
-      req.params.id,
+      decode.user_create,
       {
         $set: req.body,
       },
