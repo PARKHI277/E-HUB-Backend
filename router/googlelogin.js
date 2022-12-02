@@ -10,7 +10,7 @@ let refreshTokens = [];
 const { sign, verify } = require("jsonwebtoken");
 const auth_verify = require("../middleware/auth");
 const passport = require("passport");
-require('../config/gauth');
+require('../config/passport');
 
 router.get('/auth',(req,res)=>{
   res.send('<a href="/api/auth/google">Auth goog</a>');
