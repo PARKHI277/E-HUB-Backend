@@ -24,10 +24,11 @@ router.get('/users/auth/google/callback',passport.authenticate('google',{
 }));
 
 // Protected route, can only be accessed when user is logged-in
-router.get("/users/auth/google/protected", (req, res) => {console.log(req.user.profile);
+router.get("/users/auth/google/protected", (req, res) => {
     if(!req.user)
     res.redirect('/auth/callback/failure');
-res.send("Welcome " + req.user.email);
+res.send("Welcome " + req.user);
+console.log(req.user);
 //     console.log("User successfully signed in with google");
 // res.status(200).json({
 //     success: true,
