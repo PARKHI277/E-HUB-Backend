@@ -33,7 +33,7 @@ const MongoDBStore = require("connect-mongodb-session")(session);
 const errorController = require("./controllers/errorController");
 
 const app = express();
-require("./config/passport")(passport);
+require("./config/gauth")(passport);
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieparser());
 app.use(errorController);
