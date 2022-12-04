@@ -7,14 +7,14 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+ email: {
+    type: String,
+    required: true,
+  },
   name: {
     type: String,
     required: true,
-  },
-  photo: {
-    type: String,
-    required: true,
-  },
+  }
 },{ timestamps: true });
 
 const GoogleUser = new mongoose.model("GoogleUser", UserSchema);

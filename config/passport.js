@@ -19,10 +19,10 @@ module.exports = (passport) => {
             return done(null, user);
           } else {
             const newUser = {
-              // mistake
+             
               googleId: profile.id,
               name: profile.displayName,
-              photo: profile.photos[0].value,
+              email: profile.emails[0].value
             };
             user = await GoogleUser.create(newUser);
             console.log("creating new user");
@@ -35,12 +35,12 @@ module.exports = (passport) => {
     )
   );
   passport.serializeUser(function (user, done) {
-    done(null, user.id);
+    done(null, user);
   });
 
-  passport.deserializeUser(function (id, done) {
-    GoogleUser.findById(id, function (err, user) {
-      done(err, user);
-    });
+  passport.deserializeUser(function (user, done) {
+    //GoogleUser.findById(id, function (err, user) {
+      done(null, user);
+   // });
   });
 };
